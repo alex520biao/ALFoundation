@@ -1,7 +1,7 @@
 # ALFoundation
 
 ALFoundation是基于系统Foundation库的扩展,用于搭建快速开发框架。
-对应Foundation/Foundation.h此文件中的基础类及其扩张。
+对应Foundation/Foundation.h此文件中的基础类及其扩展。
 
 1. libextobjc    
 Libextobjc是一个非常强大的Objective-C库的扩展,为Objective-C提供诸如Safe categories、Concrete protocols、简单和安全的key paths以及简单使用block中的弱变量等功能。   
