@@ -10,7 +10,6 @@ libextobjc非常模块化，只需要一个或者两个依赖就能使用大部�
 2. ReactiveCocoa 
 
 
-
 ####YYWeakProxy
 使用NSProxy实现弱引用对象的创建
 WeakProxy持有一个target对象的弱引用(WeakProxy是target对象的影子替身)
@@ -19,6 +18,12 @@ WeakProxy持有一个target对象的弱引用(WeakProxy是target对象的影子�
 2. CADisplayLink
 3. 以及其他会retainSelf导致循环引用的场景
 
+
+####GCDMulticastDelegate
+实现一对多弱引用代理
+
+http://www.cnblogs.com/gugupluto/p/3673185.html
+https://github.com/robbiehanson/XMPPFramework/wiki/MulticastDelegate
 
 ## Quick Start
 

@@ -21,6 +21,7 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
+		D90EE3271D6B0EC800A75499 /* ALObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D90EE3261D6B0EC800A75499 /* ALObject.m */; };
 		D955B5F21C35317B002E271A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D955B5F11C35317B002E271A /* Launch Screen.storyboard */; };
 		E89A8CA88BED87F7E8284D9A /* libPods-ALFoundation_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BF98F2642CF4F821CDB4233 /* libPods-ALFoundation_Example.a */; };
 /* End PBXBuildFile section */
@@ -64,6 +65,8 @@
 		AA8AB76708AF606D12380FF2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		D81B7F092ABA4CF811951F40 /* ALFoundation.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ALFoundation.podspec; path = ../ALFoundation.podspec; sourceTree = "<group>"; };
 		D8EFD859F7151799ABA1B5EB /* Pods-ALFoundation_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ALFoundation_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ALFoundation_Tests/Pods-ALFoundation_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		D90EE3251D6B0EC800A75499 /* ALObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALObject.h; sourceTree = "<group>"; };
+		D90EE3261D6B0EC800A75499 /* ALObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALObject.m; sourceTree = "<group>"; };
 		D955B5F11C35317B002E271A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,6 +137,8 @@
 				6003F59D195388D20070C39A /* ALAppDelegate.m */,
 				6003F5A5195388D20070C39A /* ALViewController.h */,
 				6003F5A6195388D20070C39A /* ALViewController.m */,
+				D90EE3251D6B0EC800A75499 /* ALObject.h */,
+				D90EE3261D6B0EC800A75499 /* ALObject.m */,
 				D955B5F11C35317B002E271A /* Launch Screen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -391,6 +396,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F59E195388D20070C39A /* ALAppDelegate.m in Sources */,
+				D90EE3271D6B0EC800A75499 /* ALObject.m in Sources */,
 				6003F5A7195388D20070C39A /* ALViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);

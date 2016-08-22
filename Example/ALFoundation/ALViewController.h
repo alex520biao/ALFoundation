@@ -7,7 +7,18 @@
 //
 
 @import UIKit;
+#import <ALFoundation/GCDMulticastDelegate.h>
+
+@protocol MyDelegate
+
+@optional
+
+-(void)test;
+
+@end
 
 @interface ALViewController : UIViewController
+
+@property (nonatomic,strong) GCDMulticastDelegate<MyDelegate> *multiDelegate;
 
 @end
