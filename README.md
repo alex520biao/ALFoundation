@@ -11,6 +11,15 @@ libextobjc非常模块化，只需要一个或者两个依赖就能使用大部�
 
 
 
+####YYWeakProxy
+使用NSProxy实现弱引用对象的创建
+WeakProxy持有一个target对象的弱引用(WeakProxy是target对象的影子替身)
+
+1. NSTimer
+2. CADisplayLink
+3. 以及其他会retainSelf导致循环引用的场景
+
+
 ## Quick Start
 
 目前都使用cocoapods安装，在Podfile中加入
@@ -32,3 +41,7 @@ alex520biao <alex520biao@didichuxing.com>
 ## License
 
 ALFoundation is available under the MIT license. See the LICENSE file for more info.
+
+
+####TODO
+1. 字典的valueForKeyPath方法，如果KeyPath不存在系统会抛出异常。需要封装为安全方法。

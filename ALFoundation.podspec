@@ -46,8 +46,25 @@ Pod::Spec.new do |s|
   # s.dependency 'AFNetworking', '~> 2.5.4'
   # s.dependency 'ReactiveViewModel', '~> 0.3.0'
 
-  s.dependency 'libextobjc', '~> 0.4.1'
-#s.dependency 'ReactiveCocoa', '~> 2.5.0'
+  #s.dependency 'ReactiveCocoa', '~> 2.5.0'
   s.dependency 'JSONModel', '~> 1.1.0'
+
+  #常见宏定义
+  s.dependency 'libextobjc', '~> 0.4.1'
+
+  #NSObject扩展: 面向方面编程为现有的NSObject类的方法或者实例添加代码，同时考虑插入点位置，比如before/instead/after。
+  s.dependency 'Aspects', '1.4.1'
+
+  #使用KeyPath分发APNS消息
+  s.dependency 'ALAPNSManager', '0.1.4'
+
+  #iOS组件化实施方案,模块间解耦URL工具
+  s.dependency 'ALURLRouter', '1.1.0'
+
+  #NSNotificationCenter的简单替代工具
+  s.dependency 'ALObserverManager', '0.1.7'
+
+  #类别中通过关联应用添加属性
+  s.dependency 'ObjcAssociatedObjectHelpers', '2.0.1'
 
 end
