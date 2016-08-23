@@ -16,6 +16,9 @@ WeakProxy持有一个target对象的弱引用(WeakProxy是target对象的影子�
 
 1. NSTimer
 2. CADisplayLink
+3. 延迟调用 performSelector:withObject:afterDelay:
+	
+		对象释放时需要取消延迟调用 cancelPreviousPerformRequestsWithTarget:selector:object:
 3. 以及其他会retainSelf导致循环引用的场景
 
 
