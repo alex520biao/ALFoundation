@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
 
   # Uncomment following lines if ALFoundation has some resource files.
   s.resource_bundles = {
-    'ALFoundation' => ['Pod/Assets/*.png']
+    'ALFoundation' => ['Pod/Assets/*']
   }
 
   # Uncomment following lines if ALFoundation needs to link with some static libraries.

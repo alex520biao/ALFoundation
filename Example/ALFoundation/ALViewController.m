@@ -8,6 +8,8 @@
 
 #import "ALViewController.h"
 #import "ALObject.h"
+#import "DCLocalImageUtils.h"
+#import "UIImage+ALLocal.h"
 
 @interface ALViewController ()
 
@@ -33,6 +35,10 @@
 
     //multiDelegate多播发送
     [self.multiDelegate test];
+    
+    UIImage *image1 = [UIImage imageWithBundleName:@"ALFoundation" relativePath:@"activity/activity_loading"];    
+    UIImage *image2 = [UIImage imageWithRelativePath:@"ALFoundation.bundle/activity/activity_loading"];
+    NSLog(@"");
 }
 
 - (void)didReceiveMemoryWarning
