@@ -9,6 +9,7 @@
 #import "ALViewController.h"
 #import "ALObject.h"
 #import "ALFImage.h"
+#import <ALFoundation/UIImage+AssetLaunchImage.h>
 
 @interface ALViewController ()
 
@@ -39,6 +40,10 @@
     UIImage *image2 = [UIImage imageWithRelativePath:@"ALFoundation.bundle/activity/activity_loading"];
     
     UIImage *image3 = ALFImage(@"activity/activity_loading");
+    
+    //asset中启动图
+    UIImage *assetLaunchImage = [UIImage assetLaunchImage];
+
     NSLog(@"");
 }
 

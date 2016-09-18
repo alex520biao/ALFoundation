@@ -8,7 +8,6 @@
 
 #import "ALAppDelegate.h"
 #import "ALViewController.h"
-#import <ALFoundation/UIImage+AssetLaunchImage.h>
 
 @implementation ALAppDelegate
 
@@ -23,10 +22,6 @@
     self.naviController = nav;
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
-    
-    //asset中启动图
-    UIImage *image = [UIImage assetLaunchImage];
-
     
     return YES;
 }
