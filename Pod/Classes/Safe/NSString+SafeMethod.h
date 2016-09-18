@@ -2,7 +2,7 @@
 //  NSString+SafeMethod.h
 //  Pods
 //
-//  Created by liubiao on 16/4/22.
+//  Created by alex520biao on 16/4/22.
 //
 //
 

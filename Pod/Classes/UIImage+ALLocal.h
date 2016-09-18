@@ -2,7 +2,7 @@
 //  UIImage+ALLocal.h
 //  Pods
 //
-//  Created by liubiao on 15/11/13. Maintain by liubiao
+//  Created by alex520biao on 15/11/13. Maintain by alex520biao
 //
 //
 

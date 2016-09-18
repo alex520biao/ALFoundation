@@ -2,7 +2,7 @@
 //  NSArray+SafeMethod.h
 //  Pods
 //
-//  Created by liubiao on 16/4/22.
+//  Created by alex520biao on 16/4/22.
 //
 //
 
@@ -20,3 +20,16 @@
  */
 + (instancetype)sf_arrayWithObject:(id)anObject;
 @end
+
+@interface NSMutableArray (Safe)
+
+/*!
+ *  @brief 代替insertObject:atIndex
+ *
+ *  @param anObject
+ *  @param index
+ */
+-(void)sf_insertObject:(id)anObject atIndex:(NSUInteger)index;
+
+@end
+
