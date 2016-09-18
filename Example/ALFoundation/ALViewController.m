@@ -38,7 +38,7 @@
     UIImage *image1 = [UIImage imageWithBundleName:@"ALFoundation" relativePath:@"activity/activity_loading"];    
     UIImage *image2 = [UIImage imageWithRelativePath:@"ALFoundation.bundle/activity/activity_loading"];
     
-//    UIImage *image3 = ALFImage(@"activity/activity_loading");
+    UIImage *image3 = ALFImage(@"activity/activity_loading");
     NSLog(@"");
 }
 
