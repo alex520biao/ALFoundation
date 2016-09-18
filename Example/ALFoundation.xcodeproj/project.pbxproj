@@ -68,6 +68,7 @@
 		D90EE3251D6B0EC800A75499 /* ALObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALObject.h; sourceTree = "<group>"; };
 		D90EE3261D6B0EC800A75499 /* ALObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALObject.m; sourceTree = "<group>"; };
 		D955B5F11C35317B002E271A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		D96EB0C51D8E84FB00306717 /* ALFImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALFImage.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +140,7 @@
 				6003F5A6195388D20070C39A /* ALViewController.m */,
 				D90EE3251D6B0EC800A75499 /* ALObject.h */,
 				D90EE3261D6B0EC800A75499 /* ALObject.m */,
+				D96EB0C51D8E84FB00306717 /* ALFImage.h */,
 				D955B5F11C35317B002E271A /* Launch Screen.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,

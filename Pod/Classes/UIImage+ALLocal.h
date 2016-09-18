@@ -26,7 +26,7 @@
 /*!
  *  @brief 加载图片: 指定bundle及bundle中的相对路径. bundleName为nil则默认为mianBundle
  *
- *  @param bundleName   包名   如, ALFoundation
+ *  @param bundleName   包名   如ALFoundation, bundleName为nil则处理为mianBundle
  *  @param relativePath 图片在包中的相对路径  如, activity/activity_loading
  *
  *  @return
@@ -36,7 +36,7 @@
 /*!
  *  @brief 图片相对路径
  *
- *  @param bundleName   包名     如, ALFoundation
+ *  @param bundleName   包名     如ALFoundation
  *  @param relativePath 图片在包中的相对路径  如, activity/activity_loading
  *
  *  @return
