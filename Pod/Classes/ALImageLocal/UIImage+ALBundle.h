@@ -1,5 +1,5 @@
 //
-//  UIImage+ALLocal.h
+//  UIImage+ALBundle.h
 //  Pods
 //
 //  Created by alex520biao on 15/11/13. Maintain by alex520biao
@@ -10,10 +10,11 @@
 
 /*!
  *  @brief  应用本地图片加载(包括mainBundle、自定义bundle、沙盒等)
+ *  @note   本地图片获取四种形式: mainBundle、自定义bundle、asset、sanbox沙盒
  */
-@interface UIImage (ALLocal)
+@interface UIImage (ALBundle)
 
-#pragma mark -- ALLocal 本地包中的图片
+#pragma mark -- ALLocal Bundle本地包中的图片
 /*!
  *  @brief 加载图片: 使用相对路径加载图片
  *

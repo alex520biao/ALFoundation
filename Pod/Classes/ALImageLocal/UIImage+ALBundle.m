@@ -1,17 +1,18 @@
 //
-//  UIImage+ALLocal.m
+//  UIImage+ALBundle.m
 //  Pods
 //
 //  Created by alex520biao on 15/11/13. Maintain by alex520biao
 //
 //
 
-#import "UIImage+ALLocal.h"
+#import "UIImage+ALBundle.h"
 
 
-@implementation UIImage (ALLocal)
+@implementation UIImage (ALBundle)
 
 
+#pragma mark -- ALLocal Bundle本地包中的图片
 /*!
  *  @brief 使用相对路径加载图片
  *

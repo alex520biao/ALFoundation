@@ -1,12 +1,27 @@
 //
-//  UIImage+AssetLaunchImage.h
-//  UIImage+AssetLaunchImage
+//  UIImage+ALAsset.h
+//  UIImage+ALAsset
 //
 //  Created by Timur Kuchkarov on 25.11.14.
 //  Released under MIT license.
 //
 
 #import <UIKit/UIKit.h>
+/*!
+ *  @brief 获取Images.xcassets中的AppIcon与LaunchImage
+ */
+
+@interface UIImage (ALAssetIconImage)
+
+/*!
+ *  @brief 获取应用当前icon图片
+ *
+ *  @return 一共4中尺寸: 29、40、58、60
+ */
++ (UIImage *)assetIconImage;
+
+@end
+
 
 @interface UIImage (AssetLaunchImage)
 

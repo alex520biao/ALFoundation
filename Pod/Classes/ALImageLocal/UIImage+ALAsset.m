@@ -6,7 +6,25 @@
 //  Released under MIT license.
 //
 
-#import "UIImage+AssetLaunchImage.h"
+#import "UIImage+ALAsset.h"
+
+@implementation UIImage (ALAssetIconImage)
+
+/*!
+ *  @brief 获取应用当前icon图片
+ *
+ *  @return
+ */
++ (UIImage *)assetIconImage{
+    //获取当前应用assetIconImage
+    NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
+    NSString *iconName = [[infoPlist valueForKeyPath:@"CFBundleIcons.CFBundlePrimaryIcon.CFBundleIconFiles"] lastObject];
+    UIImage *icon = [UIImage imageNamed:iconName];
+    return icon;
+}
+
+@end
+
 
 // Thanks to http://stackoverflow.com/a/20045142/2082172
 // This category supports only iOS 7+, although it should be easy to add 6- support.

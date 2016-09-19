@@ -9,7 +9,8 @@
 #import "ALViewController.h"
 #import "ALObject.h"
 #import "ALFImage.h"
-#import <ALFoundation/UIImage+AssetLaunchImage.h>
+#import <ALFoundation/UIImage+ALAsset.h>
+#import "UIImage+ALSandbox.h"
 
 @interface ALViewController ()
 
@@ -37,11 +38,25 @@
     //读取本地Bundle图片
     UIImage *image1 = [UIImage imageWithBundleName:@"ALFoundation" relativePath:@"activity/activity_loading"];    
     UIImage *image2 = [UIImage imageWithRelativePath:@"ALFoundation.bundle/activity/activity_loading"];
-    
     UIImage *image3 = ALFImage(@"activity/activity_loading");
+    
+//    //向ALSandboxDocument保存图片
+//    [image3 saveToSandboxWithSanboxType:ALSandboxDocument relativePath:@"newImage1/image.png"];
+//    //向ALSandboxCache保存图片
+    [image3 saveToSandboxWithSanboxType:ALSandboxCache relativePath:@"newImage1/image.png"];
+//    //向ALSandboxTmp保存图片
+//    [image3 saveToSandboxWithSanboxType:ALSandboxTmp relativePath:@"newImage1/image.png"];
+
+    
+    //获取SandboxDocuments目录图片
+    UIImage *sandboxImage1 = [UIImage imageInSandboxDocumentsWithRelativePath:@"newImage1/image.png"];
+    UIImage *sandboxImage2 = [UIImage imageWithSandboxType:ALSandboxCache relativePath:@"newImage1/image.png"];
+    UIImage *sandboxImage3 = [UIImage imageWithSandboxType:ALSandboxTmp relativePath:@"newImage1/image.png"];
     
     //asset中启动图
     UIImage *assetLaunchImage = [UIImage assetLaunchImage];
+    UIImage *assetIconImage = [UIImage assetIconImage];
+
 
     NSLog(@"");
 }
@@ -51,5 +66,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 @end

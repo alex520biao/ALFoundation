@@ -8,7 +8,7 @@
 
 //#ifndef ALFImage_h
 //#define ALFImage_h
-#import <ALFoundation/UIImage+ALLocal.h>
+#import <ALFoundation/UIImage+ALBundle.h>
 
 //顺风车图片bundle名
 #define ALFBundleName @"ALFoundation"
