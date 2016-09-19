@@ -24,18 +24,17 @@
 	// Do any additional setup after loading the view, typically from a nib.
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
-    self.multiDelegate = (GCDMulticastDelegate <MyDelegate> *)[[GCDMulticastDelegate alloc] init];
-    
+    //添加multiDelegate绑定
     ALObject *o1 = [[ALObject alloc] init];
     ALObject *o2 = [[ALObject alloc] init];
-    
+    self.multiDelegate = (GCDMulticastDelegate <MyDelegate> *)[[GCDMulticastDelegate alloc] init];
     [self.multiDelegate addDelegate:o1 delegateQueue:dispatch_get_main_queue()];
     [self.multiDelegate addDelegate:o2 delegateQueue:dispatch_get_main_queue()];
 
     //multiDelegate多播发送
     [self.multiDelegate test];
     
+    //读取本地Bundle图片
     UIImage *image1 = [UIImage imageWithBundleName:@"ALFoundation" relativePath:@"activity/activity_loading"];    
     UIImage *image2 = [UIImage imageWithRelativePath:@"ALFoundation.bundle/activity/activity_loading"];
     
