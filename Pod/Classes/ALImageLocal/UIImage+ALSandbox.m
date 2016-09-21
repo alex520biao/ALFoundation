@@ -18,7 +18,7 @@
  */
 +(NSString*)documentsPath{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *documentsDirectory = [paths firstObject];
     return documentsDirectory;
 }
 
@@ -29,7 +29,7 @@
  */
 +(NSString*)cachePath{
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString *cachesDirectory = [paths objectAtIndex:0];
+    NSString *cachesDirectory = [paths firstObject];
     return cachesDirectory;
 }
 
