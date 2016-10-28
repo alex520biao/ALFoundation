@@ -17,7 +17,7 @@ end
 
 # Add global dependencies here.
 
-target 'ALFoundation_Example', :exclusive => true do
+target 'ALFoundation_Example' do
   # If ALFoundation depends on any private pod, remember to use `local_pod`
   # to refer it explicitly.
   # CocoaPods cannot distinguish public and private pod from podspec right now,
@@ -31,7 +31,7 @@ target 'ALFoundation_Example', :exclusive => true do
   pod "ALFoundation", :path => "../"
 end
 
-target 'ALFoundation_Tests', :exclusive => true do
+target 'ALFoundation_Tests' do
   # Add Tests specific dependencies here...
 
   pod "ALFoundation", :path => "../"

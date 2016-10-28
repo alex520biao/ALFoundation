@@ -11,6 +11,7 @@
 #import "ALFImage.h"
 #import <ALFoundation/UIImage+ALAsset.h>
 #import "UIImage+ALSandbox.h"
+#import "UIImage+ALWebP.h"
 
 @interface ALViewController ()
 
@@ -56,6 +57,9 @@
     //asset中启动图
     UIImage *assetLaunchImage = [UIImage assetLaunchImage];
     UIImage *assetIconImage = [UIImage assetIconImage];
+    
+    //读取webp图片
+    UIImage *webpImage = [UIImage imageWebPWithRelativePath:@"ALFoundation.bundle/webp/bts_im_sad@2x.webp"];
 
 
     NSLog(@"");

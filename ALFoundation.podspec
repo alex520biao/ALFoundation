@@ -67,4 +67,9 @@ Pod::Spec.new do |s|
   #类别中通过关联应用添加属性
   s.dependency 'ObjcAssociatedObjectHelpers', '2.0.1'
 
+    s.dependency 'SDWebImage'
+    s.dependency 'SDWebImage/WebP'
+
+
+
 end
