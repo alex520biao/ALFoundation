@@ -8,6 +8,7 @@
 
 #import "ALAppDelegate.h"
 #import "ALViewController.h"
+#import "ALAssertionHandler.h"
 
 @implementation ALAppDelegate
 

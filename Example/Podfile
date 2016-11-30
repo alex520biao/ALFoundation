@@ -1,5 +1,8 @@
 #source 'https://xxxx/cocoapods-specs.git'
 source 'https://github.com/CocoaPods/Specs.git'
+source 'git@git.xiaojukeji.com:one-ios/Specs.git'
+source 'git@git.xiaojukeji.com:ios/cocoapods-specs.git'
+platform:ios, '7.0'
 
 # We don't use Swift internally. Disable this option.
 #use_frameworks!
@@ -28,6 +31,9 @@ target 'ALFoundation_Example' do
 
   # Add Example specific dependencies here...
 
+  # 调试工具: ALAssert断言封装
+  pod "ALDEBugTool",:git => "https://github.com/alex520biao/ALDEBugTool.git", :branch => 'master'
+  
   pod "ALFoundation", :path => "../"
 end
 

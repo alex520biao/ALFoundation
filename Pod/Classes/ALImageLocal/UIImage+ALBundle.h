@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 /*!
- *  @brief  应用本地图片加载(包括mainBundle、自定义bundle、沙盒等)
+ *  @brief  应用加载程序包中的图片(包括mainBundle、自定义bundle、沙盒等)
  *  @note   本地图片获取四种形式: mainBundle、自定义bundle、asset、sanbox沙盒
  */
 @interface UIImage (ALBundle)
@@ -19,6 +19,7 @@
  *  @brief 加载图片: 使用相对路径加载图片
  *
  *  @param relativePath 相对路径    @"ALFoundation.bundle/activity/activity_loading"
+ *  @note  支持格式: png、jpg、webp
  *
  *  @return
  */
@@ -29,6 +30,7 @@
  *
  *  @param bundleName   包名   如ALFoundation, bundleName为nil则处理为mianBundle
  *  @param relativePath 图片在包中的相对路径  如, activity/activity_loading
+ *  @note  支持格式: png、jpg、webp
  *
  *  @return
  */
@@ -39,9 +41,10 @@
  *
  *  @param bundleName   包名     如ALFoundation
  *  @param relativePath 图片在包中的相对路径  如, activity/activity_loading
+ *  @note  支持格式: png、jpg、webp
  *
  *  @return
  */
-+ (NSString*)imageRelativePathWithBundleName:(NSString*)bundleName relativePath:(NSString*)relativePath;
++ (NSString*)relativePathWithBundleName:(NSString*)bundleName relativePath:(NSString*)relativePath;
 
 @end

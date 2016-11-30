@@ -2,7 +2,7 @@
 //  UIImage+ALSandbox.h
 //  Pods
 //
-//  Created by liubiao on 16/9/19.
+//  Created by alex520biao on 16/9/19.
 //
 //
 
@@ -24,6 +24,7 @@ typedef enum : NSUInteger {
 
 /*!
  *  @brief 应用加载本地sandbox中的图片
+ *  @note  支持沙盒中的png、jpg、webp图片格式
  */
 @interface UIImage (ALSandbox)
 
@@ -43,6 +44,7 @@ typedef enum : NSUInteger {
  *
  *  @param type         沙盒目录类型
  *  @param relativePath 目录中的相对路径
+ *  @note  relativePath支持png、jpg、webp格式
  *
  *  @return
  */
@@ -53,6 +55,7 @@ typedef enum : NSUInteger {
  *
  *  @param type         沙盒目录类型
  *  @param relativePath 图片在沙盒目录中的相对路径. 如, activity/activity_loading
+ *  @note  relativePath支持png、jpg、webp格式
  *
  *  @return 图片文件在沙盒中的绝对路径
  */
@@ -63,6 +66,7 @@ typedef enum : NSUInteger {
  *
  *  @param relativePath 图片在SandboxDocuments目录的相对录几个
  *  @note  如relativePath为newImage/pin.png，则最后图片本地绝对路径为/Users/apple/Library/Application Support/iPhone Simulator/4.3/Applications/550AF26D-174B-42E6-881B-B7499FAA32B7/Documents/newImage/pin.png
+ *  @note  relativePath支持png、jpg、webp格式
  *
  *  @return
  */

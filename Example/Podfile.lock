@@ -1,56 +1,19 @@
 PODS:
   - ALAPNSManager (0.1.4)
+  - ALDEBugTool (0.1.0)
   - ALFoundation (0.1.0):
     - ALAPNSManager (= 0.1.4)
     - ALObserverManager (= 0.1.7)
     - ALURLRouter (= 1.1.0)
-    - Aspects (= 1.4.1)
     - JSONModel (~> 1.1.0)
-    - libextobjc (~> 0.4.1)
-    - ObjcAssociatedObjectHelpers (= 2.0.1)
+    - ONEUIKit/HUD
     - SDWebImage
     - SDWebImage/WebP
   - ALObserverManager (0.1.7):
     - ReactiveCocoa
   - ALURLRouter (1.1.0)
-  - Aspects (1.4.1)
   - Expecta (1.0.5)
   - JSONModel (1.1.2)
-  - libextobjc (0.4.1):
-    - libextobjc/EXTADT (= 0.4.1)
-    - libextobjc/EXTConcreteProtocol (= 0.4.1)
-    - libextobjc/EXTKeyPathCoding (= 0.4.1)
-    - libextobjc/EXTNil (= 0.4.1)
-    - libextobjc/EXTSafeCategory (= 0.4.1)
-    - libextobjc/EXTScope (= 0.4.1)
-    - libextobjc/EXTSelectorChecking (= 0.4.1)
-    - libextobjc/EXTSynthesize (= 0.4.1)
-    - libextobjc/NSInvocation+EXT (= 0.4.1)
-    - libextobjc/NSMethodSignature+EXT (= 0.4.1)
-    - libextobjc/RuntimeExtensions (= 0.4.1)
-    - libextobjc/UmbrellaHeader (= 0.4.1)
-  - libextobjc/EXTADT (0.4.1):
-    - libextobjc/RuntimeExtensions
-  - libextobjc/EXTConcreteProtocol (0.4.1):
-    - libextobjc/RuntimeExtensions
-  - libextobjc/EXTKeyPathCoding (0.4.1):
-    - libextobjc/RuntimeExtensions
-  - libextobjc/EXTNil (0.4.1):
-    - libextobjc/RuntimeExtensions
-  - libextobjc/EXTSafeCategory (0.4.1):
-    - libextobjc/RuntimeExtensions
-  - libextobjc/EXTScope (0.4.1):
-    - libextobjc/RuntimeExtensions
-  - libextobjc/EXTSelectorChecking (0.4.1):
-    - libextobjc/RuntimeExtensions
-  - libextobjc/EXTSynthesize (0.4.1):
-    - libextobjc/RuntimeExtensions
-  - libextobjc/NSInvocation+EXT (0.4.1):
-    - libextobjc/RuntimeExtensions
-  - libextobjc/NSMethodSignature+EXT (0.4.1):
-    - libextobjc/RuntimeExtensions
-  - libextobjc/RuntimeExtensions (0.4.1)
-  - libextobjc/UmbrellaHeader (0.4.1)
   - libwebp (0.5.1):
     - libwebp/core (= 0.5.1)
     - libwebp/dec (= 0.5.1)
@@ -75,12 +38,11 @@ PODS:
   - libwebp/utils (0.5.1):
     - libwebp/core
   - libwebp/webp (0.5.1)
-  - ObjcAssociatedObjectHelpers (2.0.1):
-    - ObjcAssociatedObjectHelpers/Core (= 2.0.1)
-    - ObjcAssociatedObjectHelpers/NSObject+Dictionary (= 2.0.1)
-  - ObjcAssociatedObjectHelpers/Core (2.0.1)
-  - ObjcAssociatedObjectHelpers/NSObject+Dictionary (2.0.1):
-    - ObjcAssociatedObjectHelpers/Core
+  - ONEUIKit/Helper (1.0.6)
+  - ONEUIKit/HUD (1.0.6):
+    - ONEUIKit/Helper
+    - ONEUIKit/Theme
+  - ONEUIKit/Theme (1.0.6)
   - ReactiveCocoa (2.5):
     - ReactiveCocoa/UI (= 2.5)
   - ReactiveCocoa/Core (2.5):
@@ -88,38 +50,46 @@ PODS:
   - ReactiveCocoa/no-arc (2.5)
   - ReactiveCocoa/UI (2.5):
     - ReactiveCocoa/Core
-  - SDWebImage (3.7.6):
-    - SDWebImage/Core (= 3.7.6)
-  - SDWebImage/Core (3.7.6)
-  - SDWebImage/WebP (3.7.6):
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
+  - SDWebImage/WebP (3.8.2):
     - libwebp
     - SDWebImage/Core
   - Specta (1.0.5)
 
 DEPENDENCIES:
+  - ALDEBugTool (from `https://github.com/alex520biao/ALDEBugTool.git`, branch `master`)
   - ALFoundation (from `../`)
   - Expecta
   - Specta
 
 EXTERNAL SOURCES:
+  ALDEBugTool:
+    :branch: master
+    :git: https://github.com/alex520biao/ALDEBugTool.git
   ALFoundation:
     :path: "../"
 
+CHECKOUT OPTIONS:
+  ALDEBugTool:
+    :commit: 8e71fa7486307f823cac2a35e406f27a544fe228
+    :git: https://github.com/alex520biao/ALDEBugTool.git
+
 SPEC CHECKSUMS:
   ALAPNSManager: 21b04990585f1b24e7c9dbd52dec7634e2cd15e0
-  ALFoundation: 6109c057c83763a9c29c0ced9ece829ac5ee3ff6
+  ALDEBugTool: 0058dd93e7d2a4feecef4ce6bee020c25677ad21
+  ALFoundation: 5f54e7675a79bfb7300515175289bd5de9a053c8
   ALObserverManager: 8fd290f89c29167526df4f60bb24c0b2906a19ad
   ALURLRouter: b3eec2b534aecf9dd585b27c848af884d4b6e83e
-  Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   JSONModel: 216584d0311b053ff714f1d6cb700dbf890847bc
-  libextobjc: a650fc1bf489a3d3a9bc2e621efa3e1006fc5471
   libwebp: b9126f8982a95370cf4eaad9bb3fefd57f052c15
-  ObjcAssociatedObjectHelpers: 686c291f292c26a49b9b1fa7d58130a8d35d59d2
+  ONEUIKit: ff0a30014c3a7626ed81dd44ae3cd426862a7151
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
-  SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
 
-PODFILE CHECKSUM: 2f88e97f69d61a190aa5b2b3d2b6958c424ceed5
+PODFILE CHECKSUM: 57054e81c17b0782475a5d4fe6f09c91df17e962
 
 COCOAPODS: 1.1.1

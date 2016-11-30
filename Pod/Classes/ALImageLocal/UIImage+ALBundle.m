@@ -7,7 +7,7 @@
 //
 
 #import "UIImage+ALBundle.h"
-
+#import "UIImage+ALWebP.h"
 
 @implementation UIImage (ALBundle)
 
@@ -21,10 +21,17 @@
  *  @return
  */
 +(UIImage*)imageWithRelativePath:(NSString*)relativePath{
+    UIImage *image = nil;
     if (relativePath && relativePath.length>0) {
-        return [UIImage imageNamed:relativePath];
+        //优先使用[UIImage imageNamed:]读取png/jpg等系统支持格式
+        image = [UIImage imageNamed:relativePath];
+        
+        //无png、jpg图片,则检查其他更多图片格式: 如WebP格式
+        if (!image) {
+            image = [UIImage imageWebPWithRelativePath:relativePath];
+        }
     }
-    return nil;
+    return image;
 }
 
 /*!
@@ -37,8 +44,8 @@
  */
 + (UIImage *)imageWithBundleName:(NSString*)bundleName relativePath:(NSString *)relativePath{
     UIImage *image = nil;
-    NSString * path = [UIImage imageRelativePathWithBundleName:bundleName
-                                                  relativePath:relativePath];
+    NSString * path = [UIImage relativePathWithBundleName:bundleName
+                                             relativePath:relativePath];
     if (path && path.length>0) {
         image = [UIImage imageNamed:path];
     }
@@ -53,7 +60,7 @@
  *
  *  @return
  */
-+(NSString*)imageRelativePathWithBundleName:(NSString*)bundleName relativePath:(NSString*)relativePath{
++(NSString*)relativePathWithBundleName:(NSString*)bundleName relativePath:(NSString*)relativePath{
     if (relativePath && [relativePath length] >0) {
         if (bundleName && bundleName.length >0) {
             NSString * dir = [NSString stringWithFormat:@"%@.bundle/",bundleName];

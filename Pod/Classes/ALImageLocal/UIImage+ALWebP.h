@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 /**
- 使用URL加载WebP图片
- url可以是mainBundle、子Bundle、Sandbox以及本地其他任意位置的webP图片
+ 基于SDWebImage与libwebp的封装
+ 加载本地WebP图片,fileurl可以表示mainbundle、子bundle、sanbox以及本地其他任何位置的webp图片
  */
 @interface UIImage (ALWebP)
 
@@ -20,6 +20,7 @@
  
  @param absolutePath 图片在mainBundle中的相对路径
  @note  如相对路径relativePath: ALFoundation.bundle/webp/bts_im_sad@2x.webp
+ @note  图片可以是全名也可以不带倍数及后缀名,如没有后缀名及倍数则会根据当前设备屏幕显示倍数自动选择
  
  */
 + (UIImage*)imageWebPWithRelativePath:(NSString*)relativePath;
@@ -32,5 +33,14 @@
  
  */
 + (UIImage*)imageWebPWithAbsolutePath:(NSURL*)fileURL;
+
+/**
+ UIImage对象转换成NSData
+ 
+ @param quality分辨率 0~100
+ 
+ @return NSData数据
+ */
+- (NSData *)dataWebPWithQuality:(float)quality;
 
 @end

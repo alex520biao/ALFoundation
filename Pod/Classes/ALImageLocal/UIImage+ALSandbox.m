@@ -2,11 +2,40 @@
 //  UIImage+ALSandbox.m
 //  Pods
 //
-//  Created by liubiao on 16/9/19.
+//  Created by alex520biao on 16/9/19.
 //
 //
 
 #import "UIImage+ALSandbox.h"
+#import "UIImage+ALWebP.h"
+#import "NSData+ImageContentType.h"
+
+/**
+ 图片类型
+ */
+typedef NS_ENUM(NSInteger, NSPUIImageType){
+    NSPUIImageType_JPEG,
+    NSPUIImageType_PNG,
+    NSPUIImageType_Unknown
+};
+static inline NSPUIImageType NSPUIImageTypeFromData(NSData *imageData)
+{
+    if (imageData.length > 4) {
+        const unsigned char * bytes = [imageData bytes];
+        
+        //jpg
+        if (bytes[0] == 0xff && bytes[1] == 0xd8 && bytes[2] == 0xff){
+            return NSPUIImageType_JPEG;
+        }
+        
+        //png
+        if (bytes[0] == 0x89 && bytes[1] == 0x50 && bytes[2] == 0x4e && bytes[3] == 0x47){
+            return NSPUIImageType_PNG;
+        }
+    }
+    
+    return NSPUIImageType_Unknown;
+}
 
 @implementation UIImage (ALSandbox)
 
@@ -89,8 +118,14 @@
  */
 +(UIImage*)imageWithSandboxType:(ALSandboxType)type relativePath:(NSString*)relativePath{
     NSString *filePath = [self imagePathInSandboxWithType:ALSandboxDocument relativePath:relativePath];
-    UIImage *img = [UIImage imageWithContentsOfFile:filePath];
-    return img;
+    UIImage *image = [UIImage imageWithContentsOfFile:filePath];
+    //读取webp格式图片
+    if(!image){
+        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+        if(!fileURL) return nil;
+        image = [UIImage imageWebPWithAbsolutePath:fileURL];
+    }
+    return image;
 }
 
 /*!
@@ -122,6 +157,7 @@
             if (!isExist && pathExtension) {
                 //删除最后一级文件名
                 NSURL *pathURL = [url URLByDeletingLastPathComponent];
+#warning 需要根据图片后缀名来决定生成NSData的方式
                 NSData *data = UIImagePNGRepresentation(self);
 
                 //目录不存在则递归创建目录
@@ -152,16 +188,20 @@
                 BOOL ret = [[NSFileManager defaultManager] createFileAtPath:sandboxImgPath
                                                                    contents:data
                                                                  attributes:nil];
-                NSLog(@"");
             }else{
                 NSError *error=nil;
                 BOOL x = [[NSFileManager defaultManager] removeItemAtPath:sandboxImgPath
                                                            error:&error];
-                NSData *data = UIImagePNGRepresentation(self);
+//                NSData *data = UIImagePNGRepresentation(self);
+#warning 参数指定存储类型
+                
+                //将UIImage另存为webp格式
+                NSData *data = [self dataWebPWithQuality:100];
+                NSString *type = [NSData sd_contentTypeForImageData:data];
+                
                 BOOL ret = [[NSFileManager defaultManager] createFileAtPath:sandboxImgPath
-                                                                   contents:nil
+                                                                   contents:data
                                                                  attributes:nil];
-                NSLog(@"");
             }
         
         
@@ -174,7 +214,6 @@
 //        if(ret){
 //            //保存图片成功
 //        }
-        NSLog(@"");
     }
 }
 
