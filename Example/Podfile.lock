@@ -6,7 +6,6 @@ PODS:
     - ALObserverManager (= 0.1.7)
     - ALURLRouter (= 1.1.0)
     - JSONModel (~> 1.1.0)
-    - ONEUIKit/HUD
     - SDWebImage
     - SDWebImage/WebP
   - ALObserverManager (0.1.7):
@@ -38,11 +37,6 @@ PODS:
   - libwebp/utils (0.5.1):
     - libwebp/core
   - libwebp/webp (0.5.1)
-  - ONEUIKit/Helper (1.0.6)
-  - ONEUIKit/HUD (1.0.6):
-    - ONEUIKit/Helper
-    - ONEUIKit/Theme
-  - ONEUIKit/Theme (1.0.6)
   - ReactiveCocoa (2.5):
     - ReactiveCocoa/UI (= 2.5)
   - ReactiveCocoa/Core (2.5):
@@ -79,17 +73,16 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   ALAPNSManager: 21b04990585f1b24e7c9dbd52dec7634e2cd15e0
   ALDEBugTool: 0058dd93e7d2a4feecef4ce6bee020c25677ad21
-  ALFoundation: 5f54e7675a79bfb7300515175289bd5de9a053c8
+  ALFoundation: 708244cdc27208c8028c8a0c56d3b17eddb131fb
   ALObserverManager: 8fd290f89c29167526df4f60bb24c0b2906a19ad
   ALURLRouter: b3eec2b534aecf9dd585b27c848af884d4b6e83e
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
   JSONModel: 216584d0311b053ff714f1d6cb700dbf890847bc
   libwebp: b9126f8982a95370cf4eaad9bb3fefd57f052c15
-  ONEUIKit: ff0a30014c3a7626ed81dd44ae3cd426862a7151
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
 
-PODFILE CHECKSUM: 3fca5e135f44c6dc6faec9b19bf3fb58bac41b62
+PODFILE CHECKSUM: 41845a39b4b58f1cc1d4497cba1e7552d9805549
 
 COCOAPODS: 1.1.1
