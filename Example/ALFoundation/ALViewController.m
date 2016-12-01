@@ -12,9 +12,10 @@
 #import <ALFoundation/UIImage+ALAsset.h>
 #import "UIImage+ALSandbox.h"
 #import "UIImage+ALWebP.h"
+#import "NSObject+WeakProxy.h"
 
 @interface ALViewController ()
-
+@property(nonatomic,strong)NSTimer *timer;
 
 @end
 
@@ -67,12 +68,25 @@
     //    ALAssert1(a==5, @"a应该为%d",5);    
     
     NSLog(@"");
+
+    //弱引用替身 self.weakProxy
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:5
+                                         target:self.weakProxy
+                                       selector:@selector(onTimer:)
+                                       userInfo:nil
+                                        repeats:YES];
+    [self.timer fire];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -- 事件处理
+-(void)onTimer:(NSTimer*)timer{
+    NSLog(@"onTimer");
 }
 
 

@@ -2,7 +2,7 @@
 //  NSObject+AssociatedValues.h
 //  DiCarpool
 //
-//  Created by Tiger Xia on 3/24/15. Maintain by daiming
+//  Created by alex on 3/24/15.
 //  Copyright (c) 2015 DiDi. All rights reserved.
 //
 
