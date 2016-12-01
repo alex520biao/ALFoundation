@@ -10,11 +10,11 @@
 
 /*!
  *  @brief  应用加载程序包中的图片(包括mainBundle、自定义bundle、沙盒等)
- *  @note   本地图片获取四种形式: mainBundle、自定义bundle、asset、sanbox沙盒
+ *  @note   支持格式: png、jpg、webp
  */
 @interface UIImage (ALBundle)
 
-#pragma mark -- ALLocal Bundle本地包中的图片
+#pragma mark -- 加载ALBundle本地包中的图片
 /*!
  *  @brief 加载图片: 使用相对路径加载图片
  *
@@ -36,6 +36,7 @@
  */
 + (UIImage *)imageWithBundleName:(NSString*)bundleName relativePath:(NSString *)relativePath;
 
+#pragma mark -- other
 /*!
  *  @brief 图片相对路径
  *

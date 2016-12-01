@@ -12,7 +12,7 @@
 @implementation UIImage (ALBundle)
 
 
-#pragma mark -- ALLocal Bundle本地包中的图片
+#pragma mark -- 加载ALBundle本地包中的图片
 /*!
  *  @brief 使用相对路径加载图片
  *
@@ -52,6 +52,7 @@
     return image;
 }
 
+#pragma mark -- other
 /*!
  *  @brief 图片相对路径
  *

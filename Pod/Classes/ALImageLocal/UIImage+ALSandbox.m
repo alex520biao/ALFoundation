@@ -39,7 +39,42 @@ static inline NSPUIImageType NSPUIImageTypeFromData(NSData *imageData)
 
 @implementation UIImage (ALSandbox)
 
-#pragma mark -- ALLocal Sandbox沙盒中的图片
+#pragma mark -- 加载ALSandbox沙盒中的图片
+/*!
+ *  @brief 获取Sandbox中的图片
+ *
+ *  @param type         沙盒目录类型
+ *  @param relativePath 目录中的相对路径
+ *
+ *  @return
+ */
++(UIImage*)imageWithSandboxType:(ALSandboxType)type relativePath:(NSString*)relativePath{
+    NSString *filePath = [self imagePathInSandboxWithType:ALSandboxDocument relativePath:relativePath];
+    UIImage *image = [UIImage imageWithContentsOfFile:filePath];
+    //读取webp格式图片
+    if(!image){
+        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+        if(!fileURL) return nil;
+        image = [UIImage imageWebPWithAbsolutePath:fileURL];
+    }
+    return image;
+}
+
+/*!
+ *  @brief 读取SandboxDocuments目录中的图片
+ *
+ *  @param relativePath 图片在SandboxDocuments目录的相对录几个
+ *  @note  如relativePath为newImage/pin.png，则最后图片本地绝对路径为/Users/apple/Library/Application Support/iPhone Simulator/4.3/Applications/550AF26D-174B-42E6-881B-B7499FAA32B7/Documents/newImage/pin.png
+ *
+ *  @return
+ */
++(UIImage*)imageInSandboxDocumentsWithRelativePath:(NSString*)relativePath{
+    NSString *filePath = [self imagePathInSandboxWithType:ALSandboxDocument relativePath:relativePath];
+    UIImage *img = [UIImage imageWithContentsOfFile:filePath];
+    return img;
+}
+
+#pragma mark - other
 /*!
  *  @brief 应用本地沙盒documents目录绝对路径
  *
@@ -105,41 +140,6 @@ static inline NSPUIImageType NSPUIImageTypeFromData(NSData *imageData)
 +(BOOL)fileExistsAtPath:(NSString*)fielPath{
     BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:fielPath];
     return blHave;
-}
-
-
-/*!
- *  @brief 获取Sandbox中的图片
- *
- *  @param type         沙盒目录类型
- *  @param relativePath 目录中的相对路径
- *
- *  @return
- */
-+(UIImage*)imageWithSandboxType:(ALSandboxType)type relativePath:(NSString*)relativePath{
-    NSString *filePath = [self imagePathInSandboxWithType:ALSandboxDocument relativePath:relativePath];
-    UIImage *image = [UIImage imageWithContentsOfFile:filePath];
-    //读取webp格式图片
-    if(!image){
-        NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-        if(!fileURL) return nil;
-        image = [UIImage imageWebPWithAbsolutePath:fileURL];
-    }
-    return image;
-}
-
-/*!
- *  @brief 读取SandboxDocuments目录中的图片
- *
- *  @param relativePath 图片在SandboxDocuments目录的相对录几个
- *  @note  如relativePath为newImage/pin.png，则最后图片本地绝对路径为/Users/apple/Library/Application Support/iPhone Simulator/4.3/Applications/550AF26D-174B-42E6-881B-B7499FAA32B7/Documents/newImage/pin.png
- *
- *  @return
- */
-+(UIImage*)imageInSandboxDocumentsWithRelativePath:(NSString*)relativePath{
-    NSString *filePath = [self imagePathInSandboxWithType:ALSandboxDocument relativePath:relativePath];
-    UIImage *img = [UIImage imageWithContentsOfFile:filePath];
-    return img;
 }
 
 /*!

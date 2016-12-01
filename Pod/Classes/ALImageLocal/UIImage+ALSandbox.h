@@ -28,38 +28,18 @@ typedef enum : NSUInteger {
  */
 @interface UIImage (ALSandbox)
 
-#pragma mark -- ALLocal Sandbox沙盒中的图片
-
-/*!
- *  @brief 判断fielPath路径指向文件是否存在
- *
- *  @param fielPath
- *
- *  @return
- */
-+(BOOL)fileExistsAtPath:(NSString*)fielPath;
+#pragma mark -- 加载ALSandbox沙盒中的图片
 
 /*!
  *  @brief 获取Sandbox中的图片
  *
  *  @param type         沙盒目录类型
- *  @param relativePath 目录中的相对路径
+ *  @param relativePath 目录中的相对路径. 如, activity/activity_loading
  *  @note  relativePath支持png、jpg、webp格式
  *
  *  @return
  */
 +(UIImage*)imageWithSandboxType:(ALSandboxType)type relativePath:(NSString*)relativePath;
-
-/*!
- *  @brief 获取Sandbox图片本地绝对路径
- *
- *  @param type         沙盒目录类型
- *  @param relativePath 图片在沙盒目录中的相对路径. 如, activity/activity_loading
- *  @note  relativePath支持png、jpg、webp格式
- *
- *  @return 图片文件在沙盒中的绝对路径
- */
-+(NSString*)imagePathInSandboxWithType:(ALSandboxType)type relativePath:(NSString*)relativePath;
 
 /*!
  *  @brief 读取SandboxDocuments目录中的图片
@@ -71,6 +51,27 @@ typedef enum : NSUInteger {
  *  @return
  */
 + (UIImage*)imageInSandboxDocumentsWithRelativePath:(NSString*)relativePath;
+
+#pragma mark - other
+/*!
+ *  @brief 判断fielPath路径指向文件是否存在
+ *
+ *  @param fielPath
+ *
+ *  @return
+ */
++(BOOL)fileExistsAtPath:(NSString*)fielPath;
+
+/*!
+ *  @brief 获取Sandbox图片本地绝对路径
+ *
+ *  @param type         沙盒目录类型
+ *  @param relativePath 图片在沙盒目录中的相对路径. 如, activity/activity_loading
+ *  @note  relativePath支持png、jpg、webp格式
+ *
+ *  @return 图片文件在沙盒中的绝对路径
+ */
++(NSString*)imagePathInSandboxWithType:(ALSandboxType)type relativePath:(NSString*)relativePath;
 
 /*!
  *  @brief 将图片保存到sandbox沙盒中
