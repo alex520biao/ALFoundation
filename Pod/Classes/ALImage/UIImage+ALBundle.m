@@ -20,7 +20,7 @@
  *
  *  @return
  */
-+(UIImage*)imageWithRelativePath:(NSString*)relativePath{
++(UIImage*)imageWithRelativePath:(NSString*)relativePath{    
     UIImage *image = nil;
     if (relativePath && relativePath.length>0) {
         //优先使用[UIImage imageNamed:]读取png/jpg等系统支持格式
@@ -28,7 +28,9 @@
         
         //无png、jpg图片,则检查其他更多图片格式: 如WebP格式
         if (!image) {
-            image = [UIImage imageWebPWithRelativePath:relativePath];
+            NSString * bundlePath = [[NSBundle mainBundle] bundlePath];
+            NSString * filePath = [bundlePath stringByAppendingPathComponent:relativePath];
+            image = [UIImage imageWebPWithFilePath:filePath];
         }
     }
     return image;

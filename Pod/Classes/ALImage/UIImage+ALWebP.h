@@ -15,15 +15,24 @@
 @interface UIImage (ALWebP)
 
 
+///**
+// 从mainBundle相对路径读取Webp图片
+// 
+// @param absolutePath 图片在mainBundle中的相对路径
+// @note  如相对路径relativePath: ALFoundation.bundle/webp/bts_im_sad@2x.webp
+// @note  图片可以是全名也可以不带倍数及后缀名,如没有后缀名及倍数则会根据当前设备屏幕显示倍数自动选择
+// 
+// */
+//+ (UIImage*)imageWebPWithRelativePath:(NSString*)relativePath;
+
 /**
- 从mainBundle相对路径读取Webp图片
- 
- @param absolutePath 图片在mainBundle中的相对路径
- @note  如相对路径relativePath: ALFoundation.bundle/webp/bts_im_sad@2x.webp
- @note  图片可以是全名也可以不带倍数及后缀名,如没有后缀名及倍数则会根据当前设备屏幕显示倍数自动选择
- 
+ 使用basePath及relativePath加载webp图片
+
+ @param filePath    本地绝对路径(可以省略后缀名及倍数)
+
+ @return webp格式图片
  */
-+ (UIImage*)imageWebPWithRelativePath:(NSString*)relativePath;
++ (UIImage*)imageWebPWithFilePath:(NSString*)filePath;
 
 /**
  从本地绝对路径FileURL读取Webp图片
@@ -32,7 +41,7 @@
  @note  如真机上绝对路径fileURL: file:///private/var/mobile/Containers/Bundle/Application/216E36BF-2FEC-4451-9C65-86518338E0E7/ALFoundation_Example.app/ALFoundation.bundle/webp/bts_im_sad@2x.webp
  
  */
-+ (UIImage*)imageWebPWithAbsolutePath:(NSURL*)fileURL;
++ (UIImage*)imageWebPWithAbsoluteFileURL:(NSURL*)fileURL;
 
 /**
  UIImage对象转换成NSData

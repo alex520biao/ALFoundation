@@ -20,6 +20,7 @@
  *
  *  @param relativePath 相对路径    @"ALFoundation.bundle/activity/activity_loading"
  *  @note  支持格式: png、jpg、webp
+ *  @note  后缀名可省略及根据当前设备选择合适倍数图片，与[UIImage imageNamed:]相同
  *
  *  @return
  */

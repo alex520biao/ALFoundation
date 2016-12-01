@@ -36,36 +36,31 @@
     //multiDelegate多播发送
     [self.multiDelegate test];
     
-    //读取本地Bundle图片
-    UIImage *image1 = [UIImage imageWithBundleName:@"ALFoundation" relativePath:@"activity/activity_loading"];    
+    //读取本地Bundle图片:支持png、jpg、webp等格式
+    UIImage *imageAll = [UIImage imageWithRelativePath:@"ALFoundation.bundle/activity/activity_loading@2x.png"];
     UIImage *image2 = [UIImage imageWithRelativePath:@"ALFoundation.bundle/activity/activity_loading"];
+    UIImage *image1 = [UIImage imageWithBundleName:@"ALFoundation" relativePath:@"activity/activity_loading"];
     UIImage *image3 = ALFImage(@"activity/activity_loading");
+    UIImage *imageBundleWebp = [UIImage imageWithRelativePath:@"ALFoundation.bundle/webp/bts_im_sad"];
+    UIImage *imageBundleWebp1 = [UIImage imageWithRelativePath:@"ALFoundation.bundle/webp/bts_im_sad@2x.webp"];
     
 //    //向ALSandboxDocument保存图片
 //    [image3 saveToSandboxWithSanboxType:ALSandboxDocument relativePath:@"newImage1/image.png"];
 //    //向ALSandboxCache保存图片
-    [image3 saveToSandboxWithSanboxType:ALSandboxCache relativePath:@"newImage1/image.png"];
+//    [image3 saveToSandboxWithSanboxType:ALSandboxCache relativePath:@"newImage1/image.png"];
 //    //向ALSandboxTmp保存图片
 //    [image3 saveToSandboxWithSanboxType:ALSandboxTmp relativePath:@"newImage1/image.png"];
+    [imageBundleWebp saveToSandboxWithSanboxType:ALSandboxDocument relativePath:@"newImage1/bts_im_sad@2x.webp"];
     
     //获取SandboxDocuments目录图片
-    UIImage *sandboxImage1 = [UIImage imageInSandboxDocumentsWithRelativePath:@"newImage1/image.png"];
-    UIImage *sandboxImage2 = [UIImage imageWithSandboxType:ALSandboxCache relativePath:@"newImage1/image.png"];
-    UIImage *sandboxImage3 = [UIImage imageWithSandboxType:ALSandboxTmp relativePath:@"newImage1/image.png"];
-    
+//    UIImage *sandboxImageDocuments = [UIImage imageInSandboxDocumentsWithRelativePath:@"newImage1/image.png"];
+//    UIImage *sandboxImageCache = [UIImage imageWithSandboxType:ALSandboxCache relativePath:@"newImage1/image.png"];
+//    UIImage *sandboxImageTmp = [UIImage imageWithSandboxType:ALSandboxTmp relativePath:@"newImage1/image.png"];
+    UIImage *sandboxImageDocumentWebp = [UIImage imageWithSandboxType:ALSandboxDocument relativePath:@"newImage1/bts_im_sad@2x.webp"];
+
     //asset中启动图
     UIImage *assetLaunchImage = [UIImage assetLaunchImage];
     UIImage *assetIconImage = [UIImage assetIconImage];
-    
-    //读取webp图片
-    UIImage *webpImage = [UIImage imageWebPWithRelativePath:@"ALFoundation.bundle/webp/bts_im_sad@2x.webp"];
-    [webpImage saveToSandboxWithSanboxType:ALSandboxDocument relativePath:@"newImage1/bts_im_sad@2x.webp"];
-    UIImage *sandboxWebpImage = [UIImage imageWithSandboxType:ALSandboxDocument relativePath:@"newImage1/bts_im_sad@2x.webp"];
-
-    //支持png、jpg、webp等格式
-//    UIImage *imageAll = [UIImage imageWithRelativePath:@"ALFoundation.bundle/webp/bts_im_sad@2x.webp"];
-    UIImage *imageAll = [UIImage imageWithRelativePath:@"ALFoundation.bundle/activity/activity_loading@2x.png"];
-
 
     //测试断言
     //    int a = 4;

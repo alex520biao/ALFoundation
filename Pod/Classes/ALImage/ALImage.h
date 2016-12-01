@@ -10,7 +10,7 @@
 #define ALImage_h
 
 /*!
- *  此头文件基本上满足了iOS应用程序开发所需的全部图片加载需求,也可以按照需要单独引入
+ *  ALImage是对UIImage功能扩展。此头文件基本上满足了iOS应用程序开发所需的全部图片加载需求,也可以按照需要单独引入
  *
  *  按照图片位置划分UIImage+ALAsset(Asset资源)、UIImage+ALBundle(程序包)、UIImage+ALSandbox(沙盒)、SDWebImage(网络)
  *

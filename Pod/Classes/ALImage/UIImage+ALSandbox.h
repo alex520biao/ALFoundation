@@ -76,7 +76,7 @@ typedef enum : NSUInteger {
 /*!
  *  @brief 将图片保存到sandbox沙盒中
  *
- *  @param sandboxImgPath 图片在沙盒中的绝对路径
+ *  @param sandboxImgPath 图片在沙盒中的绝对路径，包含文件必须是有后缀名。如image.png、newImage/image.png、xxxx@2x.webp等
  */
 -(void)saveToSandboxWithAbsolutePath:(NSString*)sandboxImgPath;
 
@@ -84,7 +84,7 @@ typedef enum : NSUInteger {
  *  @brief 将图片保存到sandbox沙盒中
  *
  *  @param type         沙盒目录类型
- *  @param relativePath 图片在沙盒目录内部的相对路径,包含文件全名。如image.png或newImage/image.png
+ *  @param relativePath 图片在沙盒目录内部的相对路径,包含文件必须是有后缀名。如image.png、newImage/image.png、xxxx@2x.webp等
  */
 -(void)saveToSandboxWithSanboxType:(ALSandboxType)type  relativePath:(NSString*)relativePath;
 
