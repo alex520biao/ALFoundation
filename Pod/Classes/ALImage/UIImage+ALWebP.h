@@ -14,17 +14,6 @@
  */
 @interface UIImage (ALWebP)
 
-
-///**
-// 从mainBundle相对路径读取Webp图片
-// 
-// @param absolutePath 图片在mainBundle中的相对路径
-// @note  如相对路径relativePath: ALFoundation.bundle/webp/bts_im_sad@2x.webp
-// @note  图片可以是全名也可以不带倍数及后缀名,如没有后缀名及倍数则会根据当前设备屏幕显示倍数自动选择
-// 
-// */
-//+ (UIImage*)imageWebPWithRelativePath:(NSString*)relativePath;
-
 /**
  使用basePath及relativePath加载webp图片
 

@@ -17,6 +17,184 @@
 
 #define kWebPLossless 146
 
+
+typedef enum : NSUInteger {
+    //内存及本地均不存在
+    ALWebpAssetPositionNone=0,
+    //资源存在于内存Cache
+    ALWebpAssetPositionCache=1,
+    //资源存在于本地File
+    ALWebpAssetPositionLocalFile=2
+} ALWebpAssetPosition;
+
+
+/**
+ iOS本地Webp图片资源对象
+ FileURL用于表示本地资源对象,ALWebpAsset可以认为是图片系统(缓存+本地)中用于表示一个图片资源对象
+ */
+@interface ALWebpAsset : NSObject
+
+/**
+ 原始查找FilePath
+ */
+//@property(nonatomic,copy)NSString* searchFilePath;
+
+/**
+ 最终匹配得到的图片本地完整绝对路径(必须是标准图FileURL、有后缀名、有倍数)
+ */
+@property(nonatomic,copy)NSString* finalFilePath;
+
+/**
+ 资源对象存储位置
+ */
+@property(nonatomic,assign)ALWebpAssetPosition assetPosition;
+
+/**
+ 倍数
+ */
+//@property(nonatomic,assign) CGFloat scale;
+
+/**
+ 图像数据
+ */
+//@property(nonatomic,readonly)UIImage *webpImage;
+
+@end
+
+@implementation ALWebpAsset
+
+/**
+ 通过searchFilePath在内存Cache及本地文件系统查找得到ALWebpAsset结果
+ @param finalFilePath 资源完整绝对路径
+ @note  默认优先查找缓存
+
+ @return 查找到的资源对象
+ */
++ (ALWebpAsset*)webpAssetWithFinalFilePath:(NSString*)finalFilePath{
+    return [ALWebpAsset webpAssetWithFinalFilePath:finalFilePath cache:YES];
+}
+
+/**
+ 通过不完整searchFilePath在内存Cache及本地文件系统查找得到ALWebpAsset结果
+ 通过ALWebpAsset可以加载得到UIImage类型图像数据
+ 
+ @param filePath
+ @param cache
+ 
+ @return
+ */
++ (ALWebpAsset*)webpAssetWithFinalFilePath:(NSString*)finalFilePath cache:(BOOL)cache{
+    ALWebpAsset *asset = [[ALWebpAsset alloc] init];
+
+    //判断缓存
+    if(cache && [[ALWebpCache sharedCache] imageForKey:finalFilePath]){
+        asset.finalFilePath = finalFilePath;
+        asset.assetPosition = ALWebpAssetPositionCache;
+    }
+    
+    //判断文件
+    if(asset.assetPosition == ALWebpAssetPositionNone && [[NSFileManager defaultManager] fileExistsAtPath: finalFilePath]){
+        asset.finalFilePath = finalFilePath;
+        asset.assetPosition = ALWebpAssetPositionLocalFile;
+    }
+    if (asset && asset.finalFilePath) {
+        return asset;
+    }
+    return nil;
+}
+
+/**
+ 由filePath生成得到finalFilePath,默认优先使用缓存
+ 
+ @param filePath
+ 
+ @return
+ */
++ (ALWebpAsset*)webpAssetWithFilePath:(NSString*)filePath{
+    return [ALWebpAsset webpAssetWithFilePath:filePath cache:YES];
+}
+
+
+/**
+ 由filePath生成得到finalFilePath
+ 
+ @param filePath
+ 
+ @return
+ */
++ (ALWebpAsset*)webpAssetWithFilePath:(NSString*)filePath cache:(BOOL)cache{
+    if (!filePath) {
+        return nil;
+    }
+    
+    BOOL isFounded = NO;
+    NSString *finalFilePath = nil;
+    UIImage *image = nil;
+    NSString *path = NULL;
+    NSString *name = [filePath stringByDeletingPathExtension];
+    NSString *ext = [filePath pathExtension];
+    
+    //获取relativePath中的scale倍数: @2x、@3x
+    NSInteger scale = 0;
+    if (name.length > 3) { // "@2x".length
+        NSString *scaleStr = [name substringWithRange:NSMakeRange(name.length-3, 3)];
+        if (scaleStr.length > 0) {
+            if ([scaleStr hasPrefix:@"@"] && [scaleStr hasSuffix:@"x"]) {
+                scale = [[scaleStr substringFromIndex:1] integerValue];
+            }
+        }
+    }
+    
+    ALWebpAsset *asset = nil;
+    //无后缀名
+    if(!ext || ext.length==0){
+        //指定倍数
+        if(scale>0){
+            NSString *tmpFilePath = [filePath stringByAppendingString:@".webp" ];
+            
+            //查询资源对象
+            asset = [ALWebpAsset webpAssetWithFinalFilePath:tmpFilePath];
+        }
+        //未指定倍数,则优先使用屏幕匹配倍数,其次按照3~1顺序匹配其他倍数
+        else{
+            NSInteger mainScreenScale = [UIScreen mainScreen].scale;
+            NSString *tmpFilePath = [NSString stringWithFormat:@"%@@%zdx.webp",filePath,mainScreenScale];
+            
+            //查询资源对象
+            asset = [ALWebpAsset webpAssetWithFinalFilePath:tmpFilePath];
+            if(!asset || !asset.finalFilePath){
+                // 2. try @3..1x version
+                for (int i = 3; i > 0; i--) {
+                    if (i == mainScreenScale) { // main screen scale
+                        continue;
+                    }
+                    NSString *tmpFilePath= [NSString stringWithFormat:@"%@@%zdx.webp", name, i];
+                    
+                    //查询资源对象
+                    asset = [ALWebpAsset webpAssetWithFinalFilePath:tmpFilePath];
+                    if (asset && asset.finalFilePath) {
+                        scale = i;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    //有后缀名
+    else{
+        //查询资源对象
+        asset = [ALWebpAsset webpAssetWithFinalFilePath:filePath];
+    }
+    
+    if (asset && asset.finalFilePath) {
+        return asset;
+    }
+    return nil;
+}
+
+
+@end
+
 @implementation UIImage (ALWebP)
 
 + (UIImage*)imageWebPWithFilePath:(NSString*)filePath{
@@ -26,8 +204,8 @@
 /**
  使用basePath及relativePath加载webp图片
  
- @param filePath    本地绝对路径(可以省略后缀名及倍数)
- @param cache       按照缓存-->文件系统的优先顺序加载图片
+ @param filePath    文件路径(可以省略后缀名及倍数)
+ @param cache       启用缓存：按照缓存-->文件系统的优先顺序加载图片
  
  @return webp格式图片
  */
@@ -36,20 +214,20 @@
         return nil;
     }
     
-    NSString *finalFilePath = [UIImage imageFinalPathWithFilePath:filePath cache:cache];
+    ALWebpAsset *asset = [ALWebpAsset webpAssetWithFilePath:filePath cache:cache];
     UIImage *image = nil;
     //由缓存读取
-    if (finalFilePath) {
-        image = [[ALWebpCache sharedCache] imageForKey:finalFilePath];
+    if (asset && asset.finalFilePath) {
+        image = [[ALWebpCache sharedCache] imageForKey:asset.finalFilePath];
     }
     
     //从文件系统读取
-    if(!image){
-        NSURL *fileURL = [NSURL fileURLWithPath:finalFilePath];
+    if(!image && asset.finalFilePath){
+        NSURL *fileURL = [NSURL fileURLWithPath:asset.finalFilePath];
         if(!fileURL) return nil;
         image = [UIImage imageWebPWithAbsoluteFileURL:fileURL];
         if (cache) {
-            [[ALWebpCache sharedCache] setImage:image forKey:finalFilePath];
+            [[ALWebpCache sharedCache] setImage:image forKey:asset.finalFilePath];
         }
     }
     return image;
@@ -79,118 +257,6 @@
         }
     }
     return image;
-}
-
-
-/**
- 由filePath生成得到finalFilePath,默认优先使用缓存
-
- @param filePath
-
- @return
- */
-+ (NSString*)imageFinalPathWithFilePath:(NSString*)filePath{
-    return [UIImage imageFinalPathWithFilePath:filePath cache:YES];
-}
-
-/**
- 由filePath生成得到finalFilePath
-
- @param filePath
-
- @return
- */
-+ (NSString*)imageFinalPathWithFilePath:(NSString*)filePath cache:(BOOL)cache{
-    if (!filePath) {
-        return nil;
-    }
-    
-    BOOL isFounded = NO;
-    NSString *finalFilePath = nil;
-    UIImage *image = nil;
-    NSString *path = NULL;
-    NSString *name = [filePath stringByDeletingPathExtension];
-    NSString *ext = [filePath pathExtension];
-    
-    //获取relativePath中的scale倍数: @2x、@3x
-    NSInteger scale = 0;
-    if (name.length > 3) { // "@2x".length
-        NSString *scaleStr = [name substringWithRange:NSMakeRange(name.length-3, 3)];
-        if (scaleStr.length > 0) {
-            if ([scaleStr hasPrefix:@"@"] && [scaleStr hasSuffix:@"x"]) {
-                scale = [[scaleStr substringFromIndex:1] integerValue];
-            }
-        }
-    }
-    
-    //无后缀名
-    if(!ext || ext.length==0){
-        //指定倍数
-        if(scale>0){
-            NSString *tmpFilePath = [filePath stringByAppendingString:@".webp" ];
-            
-            //判断缓存
-            if(cache && [[ALWebpCache sharedCache] imageForKey:tmpFilePath]){
-                isFounded = YES;
-                finalFilePath = tmpFilePath;
-            }
-            
-            if(!isFounded && [[NSFileManager defaultManager] fileExistsAtPath: tmpFilePath]){
-                isFounded = YES;
-                finalFilePath = tmpFilePath;
-            }
-        }
-        //未指定倍数,则优先使用屏幕匹配倍数,其次按照3~1顺序匹配其他倍数
-        else{
-            NSInteger mainScreenScale = [UIScreen mainScreen].scale;
-            NSString *tmpFilePath = [NSString stringWithFormat:@"%@@%zdx.webp",filePath,mainScreenScale];
-            
-            //判断缓存
-            if(cache && [[ALWebpCache sharedCache] imageForKey:tmpFilePath]){
-                isFounded = YES;
-                finalFilePath = tmpFilePath;
-            }
-
-            if (!isFounded && [[NSFileManager defaultManager] fileExistsAtPath: tmpFilePath]) {
-                isFounded = YES;
-                finalFilePath = tmpFilePath;
-            }else{
-                // 2. try @3..1x version
-                for (int i = 3; i > 0; i--) {
-                    if (i == mainScreenScale) { // main screen scale
-                        continue;
-                    }
-                    NSString *tmpFilePath= [NSString stringWithFormat:@"%@@%zdx.webp", name, i];
-                    //判断缓存
-                    if(cache && [[ALWebpCache sharedCache] imageForKey:tmpFilePath]){
-                        isFounded = YES;
-                        finalFilePath = tmpFilePath;
-                    }
-
-                    if (!isFounded && [[NSFileManager defaultManager] fileExistsAtPath: tmpFilePath]) {
-                        scale = i;
-                        isFounded = YES;
-                        finalFilePath = tmpFilePath;
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    //有后缀名
-    else{
-        //判断缓存
-        if(cache && [[ALWebpCache sharedCache] imageForKey:filePath]){
-            isFounded = YES;
-            finalFilePath = filePath;
-        }
-        
-        if(!isFounded && [[NSFileManager defaultManager] fileExistsAtPath: filePath]){
-            isFounded = YES;
-            finalFilePath = filePath;
-        }
-    }
-    return finalFilePath;
 }
 
 
