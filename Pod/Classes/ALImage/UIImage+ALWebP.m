@@ -13,19 +13,94 @@
 #import "NSData+ImageContentType.h"
 #import <WebP/decode.h>
 #import <WebP/encode.h>
+#import "ALWebpCache.h"
 
 #define kWebPLossless 146
 
 @implementation UIImage (ALWebP)
 
++ (UIImage*)imageWebPWithFilePath:(NSString*)filePath{
+    return [UIImage imageWebPWithFilePath:filePath cache:YES];
+}
+
 /**
  使用basePath及relativePath加载webp图片
  
  @param filePath    本地绝对路径(可以省略后缀名及倍数)
+ @param cache       按照缓存-->文件系统的优先顺序加载图片
  
  @return webp格式图片
  */
-+ (UIImage*)imageWebPWithFilePath:(NSString*)filePath{
++ (UIImage*)imageWebPWithFilePath:(NSString*)filePath cache:(BOOL)cache{
+    if (!filePath) {
+        return nil;
+    }
+    
+    NSString *finalFilePath = [UIImage imageFinalPathWithFilePath:filePath cache:cache];
+    UIImage *image = nil;
+    //由缓存读取
+    if (finalFilePath) {
+        image = [[ALWebpCache sharedCache] imageForKey:finalFilePath];
+    }
+    
+    //从文件系统读取
+    if(!image){
+        NSURL *fileURL = [NSURL fileURLWithPath:finalFilePath];
+        if(!fileURL) return nil;
+        image = [UIImage imageWebPWithAbsoluteFileURL:fileURL];
+        if (cache) {
+            [[ALWebpCache sharedCache] setImage:image forKey:finalFilePath];
+        }
+    }
+    return image;
+}
+
+/**
+ 从本地绝对路径FileURL读取Webp图片
+ 
+ @param fileURL 本地绝对路径对应的fileURL
+ 
+ */
++ (UIImage*)imageWebPWithAbsoluteFileURL:(NSURL*)fileURL{
+    UIImage *image = nil;
+    //必须是本地fileURL
+    if(fileURL && fileURL.fileURL){
+        NSError *dataError = nil; //NSDataReadingMappedIfSafe防止内存消耗过大
+        NSData *data = [NSData dataWithContentsOfURL:fileURL options:NSDataReadingMappedIfSafe error:&dataError];
+        if (dataError != nil) {
+            NSLog(@"webp image load failed: %@", dataError);
+            return nil;
+        }
+        NSString *type = [NSData sd_contentTypeForImageData:data];
+
+        //判断NSDta图片格式
+        if ([type isEqualToString:@"image/webp"]) {
+            image = [UIImage sd_imageWithWebPData:data];
+        }
+    }
+    return image;
+}
+
+
+/**
+ 由filePath生成得到finalFilePath,默认优先使用缓存
+
+ @param filePath
+
+ @return
+ */
++ (NSString*)imageFinalPathWithFilePath:(NSString*)filePath{
+    return [UIImage imageFinalPathWithFilePath:filePath cache:YES];
+}
+
+/**
+ 由filePath生成得到finalFilePath
+
+ @param filePath
+
+ @return
+ */
++ (NSString*)imageFinalPathWithFilePath:(NSString*)filePath cache:(BOOL)cache{
     if (!filePath) {
         return nil;
     }
@@ -53,7 +128,14 @@
         //指定倍数
         if(scale>0){
             NSString *tmpFilePath = [filePath stringByAppendingString:@".webp" ];
-            if([[NSFileManager defaultManager] fileExistsAtPath: tmpFilePath]){
+            
+            //判断缓存
+            if(cache && [[ALWebpCache sharedCache] imageForKey:tmpFilePath]){
+                isFounded = YES;
+                finalFilePath = tmpFilePath;
+            }
+            
+            if(!isFounded && [[NSFileManager defaultManager] fileExistsAtPath: tmpFilePath]){
                 isFounded = YES;
                 finalFilePath = tmpFilePath;
             }
@@ -62,7 +144,14 @@
         else{
             NSInteger mainScreenScale = [UIScreen mainScreen].scale;
             NSString *tmpFilePath = [NSString stringWithFormat:@"%@@%zdx.webp",filePath,mainScreenScale];
-            if ([[NSFileManager defaultManager] fileExistsAtPath: tmpFilePath]) {
+            
+            //判断缓存
+            if(cache && [[ALWebpCache sharedCache] imageForKey:tmpFilePath]){
+                isFounded = YES;
+                finalFilePath = tmpFilePath;
+            }
+
+            if (!isFounded && [[NSFileManager defaultManager] fileExistsAtPath: tmpFilePath]) {
                 isFounded = YES;
                 finalFilePath = tmpFilePath;
             }else{
@@ -72,9 +161,15 @@
                         continue;
                     }
                     NSString *tmpFilePath= [NSString stringWithFormat:@"%@@%zdx.webp", name, i];
-                    if ([[NSFileManager defaultManager] fileExistsAtPath: tmpFilePath]) {
+                    //判断缓存
+                    if(cache && [[ALWebpCache sharedCache] imageForKey:tmpFilePath]){
                         isFounded = YES;
+                        finalFilePath = tmpFilePath;
+                    }
+
+                    if (!isFounded && [[NSFileManager defaultManager] fileExistsAtPath: tmpFilePath]) {
                         scale = i;
+                        isFounded = YES;
                         finalFilePath = tmpFilePath;
                         break;
                     }
@@ -84,39 +179,18 @@
     }
     //有后缀名
     else{
-        if([[NSFileManager defaultManager] fileExistsAtPath: filePath]){
+        //判断缓存
+        if(cache && [[ALWebpCache sharedCache] imageForKey:filePath]){
+            isFounded = YES;
+            finalFilePath = filePath;
+        }
+        
+        if(!isFounded && [[NSFileManager defaultManager] fileExistsAtPath: filePath]){
             isFounded = YES;
             finalFilePath = filePath;
         }
     }
-    
-    if(isFounded && finalFilePath){
-        NSURL *fileURL = [NSURL fileURLWithPath:finalFilePath];
-        if(!fileURL) return nil;
-        image = [UIImage imageWebPWithAbsoluteFileURL:fileURL];
-    }
-    return image;
-}
-
-/**
- 从本地绝对路径FileURL读取Webp图片
- 
- @param fileURL 本地绝对路径对应的fileURL
- 
- */
-+ (UIImage*)imageWebPWithAbsoluteFileURL:(NSURL*)fileURL{
-    UIImage *image = nil;
-    //必须是本地fileURL
-    if(fileURL && fileURL.fileURL){
-        NSData *data = [NSData dataWithContentsOfURL:fileURL];
-        NSString *type = [NSData sd_contentTypeForImageData:data];
-
-        //判断NSDta图片格式
-        if ([type isEqualToString:@"image/webp"]) {
-            image = [UIImage sd_imageWithWebPData:data];
-        }
-    }
-    return image;
+    return finalFilePath;
 }
 
 
