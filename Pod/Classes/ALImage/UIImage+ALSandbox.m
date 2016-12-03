@@ -10,33 +10,6 @@
 #import "UIImage+ALWebP.h"
 #import "NSData+ImageContentType.h"
 
-/**
- 图片类型
- */
-typedef NS_ENUM(NSInteger, NSPUIImageType){
-    NSPUIImageType_JPEG,
-    NSPUIImageType_PNG,
-    NSPUIImageType_Unknown
-};
-static inline NSPUIImageType NSPUIImageTypeFromData(NSData *imageData)
-{
-    if (imageData.length > 4) {
-        const unsigned char * bytes = [imageData bytes];
-        
-        //jpg
-        if (bytes[0] == 0xff && bytes[1] == 0xd8 && bytes[2] == 0xff){
-            return NSPUIImageType_JPEG;
-        }
-        
-        //png
-        if (bytes[0] == 0x89 && bytes[1] == 0x50 && bytes[2] == 0x4e && bytes[3] == 0x47){
-            return NSPUIImageType_PNG;
-        }
-    }
-    
-    return NSPUIImageType_Unknown;
-}
-
 @implementation UIImage (ALSandbox)
 
 #pragma mark -- 加载ALSandbox沙盒中的图片

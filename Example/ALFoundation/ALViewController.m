@@ -38,12 +38,13 @@
     [self.multiDelegate test];
     
     //读取本地Bundle图片:支持png、jpg、webp等格式
-    UIImage *imageAll = [UIImage imageWithRelativePath:@"ALFoundation.bundle/activity/activity_loading@2x.png"];
-    UIImage *image2 = [UIImage imageWithRelativePath:@"ALFoundation.bundle/activity/activity_loading"];
+    UIImage *imageAll = [UIImage imageNamed:@"ALFoundation.bundle/activity/activity_loading@2x.png"];
+    UIImage *image2 = [UIImage imageNamed:@"ALFoundation.bundle/activity/activity_loading"];
+    UIImage *imageBundleWebp = [UIImage imageNamed:@"ALFoundation.bundle/webp/bts_im_sad"];
+    UIImage *imageBundleWebp2 = [UIImage imageNamed:@"ALFoundation.bundle/webp/bts_im_sad@2x.webp"];
+    
     UIImage *image1 = [UIImage imageWithBundleName:@"ALFoundation" relativePath:@"activity/activity_loading"];
     UIImage *image3 = ALFImage(@"activity/activity_loading");
-    UIImage *imageBundleWebp = [UIImage imageWithRelativePath:@"ALFoundation.bundle/webp/bts_im_sad"];
-    UIImage *imageBundleWebp1 = [UIImage imageWithRelativePath:@"ALFoundation.bundle/webp/bts_im_sad@2x.webp"];
     
 //    //向ALSandboxDocument保存图片
 //    [image3 saveToSandboxWithSanboxType:ALSandboxDocument relativePath:@"newImage1/image.png"];

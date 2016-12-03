@@ -15,6 +15,7 @@
  *  按照图片位置划分UIImage+ALAsset(Asset资源)、UIImage+ALBundle(程序包)、UIImage+ALSandbox(沙盒)、SDWebImage(网络)
  *
  *  按照图片格式划分png、jpg、gif、webp等
+ *  hook系统[UIImage imageNamed:]方法,使其支持webp格式。使用方法与读取png相同 [UIImage imageNamed:@"ALFoundation.bundle/webp/bts_im_sad@2x.webp"]
  *
  */
 

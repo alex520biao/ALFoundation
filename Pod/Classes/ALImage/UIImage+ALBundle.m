@@ -8,9 +8,40 @@
 
 #import "UIImage+ALBundle.h"
 #import "UIImage+ALWebP.h"
+#import <objc/runtime.h>
+#import <objc/message.h>
 
 @implementation UIImage (ALBundle)
 
+#pragma mark -- hook_imageNamed
+/**
+ 类的初始化先于对象
+ */
++(void)load{
+    //与系统[UIImage imageNamed:]方法交换实现,替换之后调用hook_imageNamed为原系统方法imageNamed,调用imageNamed相当于hook_imageNamed:
+    method_exchangeImplementations(class_getClassMethod(self, @selector(imageNamed:)),
+                                   class_getClassMethod(self, @selector(hook_imageNamed:)));
+}
+
+/**
+ 在[UIImage imageNamed:]方法末尾插入新代码
+ @param imageName 图片在mainBundle中的相对路径relativePath
+
+ @return
+ */
++(UIImage*)hook_imageNamed: (NSString*)imageName{
+    //优先使用[UIImage imageNamed:]读取png/jpg等系统支持格式
+    //hook_imageNamed:与原imageNamed:方法实现进行了替换,此时myImageNamed:即为系统原imageNamed:方法
+    UIImage *image = [UIImage hook_imageNamed:imageName];
+        
+    //无png、jpg图片,则检查其他更多图片格式: 如WebP格式
+    if (!image && imageName && imageName.length>0) {
+        NSString * bundlePath = [[NSBundle mainBundle] bundlePath];
+        NSString * filePath = [bundlePath stringByAppendingPathComponent:imageName];
+        image = [UIImage imageWebPWithFilePath:filePath];
+    }
+    return image;
+}
 
 #pragma mark -- 加载ALBundle本地包中的图片
 /*!
@@ -21,17 +52,15 @@
  *  @return
  */
 +(UIImage*)imageWithRelativePath:(NSString*)relativePath{    
-    UIImage *image = nil;
-    if (relativePath && relativePath.length>0) {
-        //优先使用[UIImage imageNamed:]读取png/jpg等系统支持格式
-        image = [UIImage imageNamed:relativePath];
-        
-        //无png、jpg图片,则检查其他更多图片格式: 如WebP格式
-        if (!image) {
-            NSString * bundlePath = [[NSBundle mainBundle] bundlePath];
-            NSString * filePath = [bundlePath stringByAppendingPathComponent:relativePath];
-            image = [UIImage imageWebPWithFilePath:filePath];
-        }
+    //优先使用[UIImage imageNamed:]读取png/jpg等系统支持格式
+    //hook_imageNamed:与原imageNamed:方法实现进行了替换,此时myImageNamed:即为系统原imageNamed:方法
+    UIImage *image = [UIImage hook_imageNamed:relativePath];
+    
+    //无png、jpg图片,则检查其他更多图片格式: 如WebP格式
+    if (!image && relativePath && relativePath.length>0) {
+        NSString * bundlePath = [[NSBundle mainBundle] bundlePath];
+        NSString * filePath = [bundlePath stringByAppendingPathComponent:relativePath];
+        image = [UIImage imageWebPWithFilePath:filePath];
     }
     return image;
 }
@@ -49,7 +78,7 @@
     NSString * path = [UIImage relativePathWithBundleName:bundleName
                                              relativePath:relativePath];
     if (path && path.length>0) {
-        image = [UIImage imageNamed:path];
+        image = [UIImage imageWithRelativePath:path];
     }
     return image;
 }
