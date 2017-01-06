@@ -13,8 +13,7 @@
 #import "UIImage+ALSandbox.h"
 #import "UIImage+ALWebP.h"
 #import "NSObject+WeakProxy.h"
-
-#import "ASLocalized.h"
+#import "ALLocalized.h"
 
 
 @interface ALViewController ()
@@ -80,9 +79,10 @@
                                        userInfo:nil
                                         repeats:YES];
     [self.timer fire];
-        
+    
     //pod中的国际化文案读取
-    NSString *str = [ASLocalizedString localizedStringForKey:@"TName" bundleName:@"ALFoundation" table:@"user"];
+    NSString *str = [ALLocalizedString localizedStringForKey:@"TName" bundleName:@"ALFoundation" table:@"user"];
+    NSString *str11 = ALLocalizedStringFromTableInBundle(@"TName",@"user",@"ALFoundation",nil);
     NSLog(@"str:%@",str);
 }
 

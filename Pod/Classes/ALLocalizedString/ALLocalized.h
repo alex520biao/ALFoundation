@@ -9,6 +9,6 @@
 #ifndef ALLocalized_h
 #define ALLocalized_h
 
-#import "ASLocalizedString.h"
+#import "ALLocalizedString.h"
 
 #endif /* ALLocalized_h */

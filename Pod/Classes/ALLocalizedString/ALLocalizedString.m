@@ -1,12 +1,12 @@
 //
-//  ASLocalizedString.m
+//  ALLocalizedString.m
 //  Pods
 //
 //  Created by alex on 2016/12/27.
 //
 //
 
-#import "ASLocalizedString.h"
+#import "ALLocalizedString.h"
 static NSString *appLanguageKey = @"appLanguageKey";
 
 
@@ -112,7 +112,7 @@ static NSString *appLanguageKey = @"appLanguageKey";
 @end
 
 
-@implementation ASLocalizedString
+@implementation ALLocalizedString
 
 /**
  MainBundle+app包名中的国际化文本
@@ -142,6 +142,8 @@ static NSString *appLanguageKey = @"appLanguageKey";
     return localizedString;
 }
 
+
+
 /**
  获取指定pod包bundleName+当前语言包appLanguage.lproj+指定文件table.strings+指定key对应的文案
  
@@ -156,38 +158,66 @@ static NSString *appLanguageKey = @"appLanguageKey";
     NSString *appLanguage = [[NSUserDefaults standardUserDefaults] objectForKey:appLanguageKey];
 #warning appLanguage需要设置默认值
     appLanguage = @"zh-Hans-HK";
-    ALLanguage *lang = [[ALLanguage alloc] initWithALLanguageStr:appLanguage];
     
     //当前操作系统语言
     NSArray *languages = [NSLocale preferredLanguages];// app所支持的语言
     NSString *currentOSLanguage = [languages objectAtIndex:0];
+    ALLanguage *lang = [[ALLanguage alloc] initWithALLanguageStr:appLanguage];
     
-    
+    //本地化的文案
+    NSString *localizedString = [ALLocalizedString localizedStringForKey:key language:lang bundleName:bundleName table:table].localizedString;
+    return localizedString;
+}
+
+/**
+ 获取指定pod包bundleName+当前语言包appLanguage.lproj+指定文件table.strings+指定key对应的文案
+ 
+ @param key        文案key
+ @param language   语言类型，格式如:zh-Hans-HK
+ @param bundleName pod的包名
+ @param table      国际化文件名 table.lproj
+ 
+ @return
+ */
++(ALLocalizedString*)localizedStringForKey:(NSString*)key language:(ALLanguage*)language bundleName:(NSString*)bundleName table:(NSString*)table{
     //语言包 appLanguage为nil则默认读取en.lproj
     NSString *podBundlePath = [[NSBundle mainBundle] pathForResource:bundleName ofType:@"bundle"];
     NSBundle *podBundle = [NSBundle bundleWithPath:podBundlePath];
     
+    ALLocalizedString *string = [[ALLocalizedString alloc] init];
+    string.localizedKey = key;
+    string.bundleName = bundleName;
+    string.table = table;
+    string.language = language.languageStr;
+
     //使用zh-Hans-HK字符串逐级递减查找对应的lproj包
-    NSBundle *appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:lang.languageStr ofType:@"lproj"]];
+    NSBundle *appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:language.languageStr ofType:@"lproj"]];
     if(!appLanguageBundle){
         //查找zh-Hans-HK.lproj
-        appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:lang.languageStrForAll ofType:@"lproj"]];
+        appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:language.languageStrForAll ofType:@"lproj"]];
+        if (appLanguageBundle) {
+            string.finalLanguage = language.languageStrForAll;
+        }
     }
     if(!appLanguageBundle){
         //查找zh-Hans.lproj
-        appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:lang.languageStrForFirstAndSubType ofType:@"lproj"]];
+        appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:language.languageStrForFirstAndSubType ofType:@"lproj"]];
+        if (appLanguageBundle) {
+            string.finalLanguage = language.languageStrForFirstAndSubType;
+        }
     }
     if(!appLanguageBundle){
         //查找zh.lproj
-        appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:lang.firstType ofType:@"lproj"]];
+        appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:language.firstType ofType:@"lproj"]];
+        if (appLanguageBundle) {
+            string.finalLanguage = language.firstType;
+        }
     }
     
-    //读取mianBundle下appBundleName.string中的国际化文案
-    NSString *localizedString = [appLanguageBundle localizedStringForKey:key value:nil table:table];
-    
-    return localizedString;
+    //lproj的文案
+    string.localizedString = [appLanguageBundle localizedStringForKey:key value:nil table:table];
+    return string;
 }
-
 
 #pragma mark - 管理应用内语言
 /**

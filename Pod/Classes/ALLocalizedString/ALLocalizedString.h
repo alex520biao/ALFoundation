@@ -1,5 +1,5 @@
 //
-//  ASLocalizedString.h
+//  ALLocalizedString.h
 //  Pods
 //
 //  Created by alex on 2016/12/27.
@@ -7,6 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+
+
+/**
+ 获取指定pod包bundleName+当前语言包appLanguage.lproj+指定文件table.strings+指定key对应的文案
+
+ @param key        文案key
+ @param bundleName pod的包名
+ @param table      国际化文件名 table.lproj
+ 
+ */
+#define ALLocalizedStringFromTableInBundle(key, tbl, bundle, comment) [ALLocalizedString localizedStringForKey:key bundleName:bundle table:tbl]
 
 //苹果本地化语言格式字符串
 typedef NSString ALLanguageStr;
@@ -66,7 +77,27 @@ typedef NSString ALLanguageStr;
 
 @end
 
-@interface ASLocalizedString : NSObject
+@interface ALLocalizedString : NSObject
+
+/**
+ 本地化文案
+ */
+@property (nonatomic, copy) NSString *localizedString;
+
+@property (nonatomic, copy) NSString *localizedKey;
+@property (nonatomic, copy) NSString *bundleName;
+@property (nonatomic, copy) NSString *table;
+
+/**
+ 所属语言
+ */
+@property (nonatomic, copy) ALLanguageStr *language;
+
+/**
+ 读取文案的最终语言包
+ */
+@property (nonatomic, copy) ALLanguageStr *finalLanguage;
+
 
 
 /**
@@ -88,6 +119,18 @@ typedef NSString ALLanguageStr;
  @return
  */
 +(NSString*)localizedStringForKey:(NSString*)key bundleName:(NSString*)bundleName table:(NSString*)table;
+
+/**
+ 获取指定pod包bundleName+当前语言包appLanguage.lproj+指定文件table.strings+指定key对应的文案
+ 
+ @param key        文案key
+ @param language   语言类型，格式如:zh-Hans-HK
+ @param bundleName pod的包名
+ @param table      国际化文件名 table.lproj
+ 
+ @return
+ */
++(ALLocalizedString*)localizedStringForKey:(NSString*)key language:(ALLanguage*)language bundleName:(NSString*)bundleName table:(NSString*)table;
 
 
 #pragma mark - 管理应用内语言
