@@ -32,8 +32,8 @@ target 'ALFoundation_Example' do
   # Add Example specific dependencies here...
 
   # 调试工具: ALAssert断言封装
-  pod "ALDEBugTool",:git => "https://github.com/alex520biao/ALDEBugTool.git", :branch => 'master'
-  
+  pod "ALDEBugTool", :configuration => 'Debug'
+
   pod "ALFoundation", :path => "../"
 end
 

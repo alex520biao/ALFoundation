@@ -1,6 +1,6 @@
 PODS:
   - ALAPNSManager (0.1.4)
-  - ALDEBugTool (0.1.0)
+  - ALDEBugTool (0.2.0)
   - ALFoundation (0.1.0):
     - ALAPNSManager (= 0.1.4)
     - ALObserverManager (= 0.1.7)
@@ -53,26 +53,18 @@ PODS:
   - Specta (1.0.5)
 
 DEPENDENCIES:
-  - ALDEBugTool (from `https://github.com/alex520biao/ALDEBugTool.git`, branch `master`)
+  - ALDEBugTool
   - ALFoundation (from `../`)
   - Expecta
   - Specta
 
 EXTERNAL SOURCES:
-  ALDEBugTool:
-    :branch: master
-    :git: https://github.com/alex520biao/ALDEBugTool.git
   ALFoundation:
     :path: "../"
 
-CHECKOUT OPTIONS:
-  ALDEBugTool:
-    :commit: 8e71fa7486307f823cac2a35e406f27a544fe228
-    :git: https://github.com/alex520biao/ALDEBugTool.git
-
 SPEC CHECKSUMS:
   ALAPNSManager: 21b04990585f1b24e7c9dbd52dec7634e2cd15e0
-  ALDEBugTool: 0058dd93e7d2a4feecef4ce6bee020c25677ad21
+  ALDEBugTool: 03d5c232c6c5d64cb6c140d5a23d87ef0dd93e6d
   ALFoundation: 708244cdc27208c8028c8a0c56d3b17eddb131fb
   ALObserverManager: 8fd290f89c29167526df4f60bb24c0b2906a19ad
   ALURLRouter: b3eec2b534aecf9dd585b27c848af884d4b6e83e
@@ -83,6 +75,6 @@ SPEC CHECKSUMS:
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
 
-PODFILE CHECKSUM: 41845a39b4b58f1cc1d4497cba1e7552d9805549
+PODFILE CHECKSUM: d2c29f05c9976e4b9ad18ec73a51ff3c58695706
 
 COCOAPODS: 1.1.1

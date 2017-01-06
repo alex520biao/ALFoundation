@@ -14,6 +14,9 @@
 #import "UIImage+ALWebP.h"
 #import "NSObject+WeakProxy.h"
 
+#import "ASLocalized.h"
+
+
 @interface ALViewController ()
 @property(nonatomic,strong)NSTimer *timer;
 
@@ -77,6 +80,10 @@
                                        userInfo:nil
                                         repeats:YES];
     [self.timer fire];
+        
+    //pod中的国际化文案读取
+    NSString *str = [ASLocalizedString localizedStringForKey:@"TName" bundleName:@"ALFoundation" table:@"user"];
+    NSLog(@"str:%@",str);
 }
 
 - (void)didReceiveMemoryWarning
