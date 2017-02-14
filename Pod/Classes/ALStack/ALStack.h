@@ -11,7 +11,7 @@
 /**
  由于Object-C中没有提供Stack容器,因此自己实践了一个简单的stack容器
  LIFO，即后进先出（Last in, first out）
- 典型的使用场景是
+ 典型的使用场景是多个UIAlertView展示时管理等
  */
 @interface ALStack : NSObject
     
