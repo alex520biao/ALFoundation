@@ -21,13 +21,13 @@ static NSString *appLanguageKey = @"appLanguageKey";
 /**
  语言大分类: 如en、zh等,必须小写
  */
-@property (nonatomic, copy,readwrite) NSString *firstType;
+@property (nonatomic, copy,readwrite) NSString *firstclassification;
 
 /**
  语言子分类: 如中文: Hans(简体)、Hant(繁体)，首字母大写其余小写
  中文等特殊语言有子分类
  */
-@property (nonatomic, copy,readwrite) NSString *subType;
+@property (nonatomic, copy,readwrite) NSString *subclassification;
 
 /**
  语言国家/地区代码: CN(大陆)、HK(香港)、TW(台湾)、SG(新加坡)等
@@ -51,15 +51,15 @@ static NSString *appLanguageKey = @"appLanguageKey";
             //一位
             if (components.count==1) {
                 //如: zh
-                self.firstType = [components objectAtIndex:0];
+                self.firstclassification = [components objectAtIndex:0];
             }
 
             //两位
             if (components.count==2) {
-                self.firstType = [components objectAtIndex:0];
-                if([self.firstType isEqualToString:@"zh"] && [[components objectAtIndex:1] hasPrefix:@"Han"]){
+                self.firstclassification = [components objectAtIndex:0];
+                if([self.firstclassification isEqualToString:@"zh"] && [[components objectAtIndex:1] hasPrefix:@"Han"]){
                     //如： zh-Hans
-                    self.subType = [components objectAtIndex:1] ;
+                    self.subclassification = [components objectAtIndex:1] ;
                 }else{
                     //如: zh-CN 非iOS标准格式
                     self.region = [components objectAtIndex:1];
@@ -69,8 +69,8 @@ static NSString *appLanguageKey = @"appLanguageKey";
             //三位及以上
             if (components.count>2) {
                 //如: zh-Hant-HK
-                self.firstType = [components objectAtIndex:0];
-                self.subType = [components objectAtIndex:1];
+                self.firstclassification = [components objectAtIndex:0];
+                self.subclassification = [components objectAtIndex:1];
                 self.region = [components objectAtIndex:2];
             }
         }
@@ -85,9 +85,9 @@ static NSString *appLanguageKey = @"appLanguageKey";
  @return
  */
 -(ALLanguageStr*)languageStrForAll{
-    NSString *str = [NSString stringWithFormat:@"%@",self.firstType];
-    if (self.subType) {
-        str =[NSString stringWithFormat:@"%@-%@",str,self.subType];
+    NSString *str = [NSString stringWithFormat:@"%@",self.firstclassification];
+    if (self.subclassification) {
+        str =[NSString stringWithFormat:@"%@-%@",str,self.subclassification];
     }
     if (self.region) {
         str =[NSString stringWithFormat:@"%@-%@",str,self.region];
@@ -101,10 +101,10 @@ static NSString *appLanguageKey = @"appLanguageKey";
  
  @return
  */
--(ALLanguageStr*)languageStrForFirstAndSubType{
-    NSString *str = [NSString stringWithFormat:@"%@",self.firstType];
-    if (self.subType) {
-        str =[NSString stringWithFormat:@"%@-%@",str,self.subType];
+-(ALLanguageStr*)languageStrForFirstAndSubClass{
+    NSString *str = [NSString stringWithFormat:@"%@",self.firstclassification];
+    if (self.subclassification) {
+        str =[NSString stringWithFormat:@"%@-%@",str,self.subclassification];
     }
     return str;
 }
@@ -154,18 +154,11 @@ static NSString *appLanguageKey = @"appLanguageKey";
  @return
  */
 +(NSString*)localizedStringForKey:(NSString*)key bundleName:(NSString*)bundleName table:(NSString*)table{
-    //当前语言 需要判断appLanguage为空的情况设置默认语言
-    NSString *appLanguage = [[NSUserDefaults standardUserDefaults] objectForKey:appLanguageKey];
-#warning appLanguage需要设置默认值
-    appLanguage = @"zh-Hans-HK";
-    
-    //当前操作系统语言
-    NSArray *languages = [NSLocale preferredLanguages];// app所支持的语言
-    NSString *currentOSLanguage = [languages objectAtIndex:0];
-    ALLanguage *lang = [[ALLanguage alloc] initWithALLanguageStr:appLanguage];
+    //app当前语言
+    NSString *appLanguage = [ALLocalizedString appLanguage];
     
     //本地化的文案
-    NSString *localizedString = [ALLocalizedString localizedStringForKey:key language:lang bundleName:bundleName table:table].localizedString;
+    NSString *localizedString = [ALLocalizedString localizedStringForKey:key language:appLanguage bundleName:bundleName table:table].localizedString;
     return localizedString;
 }
 
@@ -179,7 +172,7 @@ static NSString *appLanguageKey = @"appLanguageKey";
  
  @return
  */
-+(ALLocalizedString*)localizedStringForKey:(NSString*)key language:(ALLanguage*)language bundleName:(NSString*)bundleName table:(NSString*)table{
++(ALLocalizedString*)localizedStringForKey:(NSString*)key language:(ALLanguageStr*)languageStr bundleName:(NSString*)bundleName table:(NSString*)table{
     //语言包 appLanguage为nil则默认读取en.lproj
     NSString *podBundlePath = [[NSBundle mainBundle] pathForResource:bundleName ofType:@"bundle"];
     NSBundle *podBundle = [NSBundle bundleWithPath:podBundlePath];
@@ -188,29 +181,36 @@ static NSString *appLanguageKey = @"appLanguageKey";
     string.localizedKey = key;
     string.bundleName = bundleName;
     string.table = table;
-    string.language = language.languageStr;
+    string.language = languageStr;
 
-    //使用zh-Hans-HK字符串逐级递减查找对应的lproj包
-    NSBundle *appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:language.languageStr ofType:@"lproj"]];
+    //按照languageStr(如zh-Hans-HK)逐级递减查找对应的lproj包
+    //先用原始languageStr查找对应的lproj包
+    NSBundle *appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:languageStr ofType:@"lproj"]];
     if(!appLanguageBundle){
         //查找zh-Hans-HK.lproj
-        appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:language.languageStrForAll ofType:@"lproj"]];
+        appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:languageStr ofType:@"lproj"]];
         if (appLanguageBundle) {
-            string.finalLanguage = language.languageStrForAll;
+            string.finalLanguage = languageStr;
         }
     }
+    
+    //如果languageStr未找到lproj，则使用递减查找lproj(如zh-Hans.lproj)
     if(!appLanguageBundle){
-        //查找zh-Hans.lproj
-        appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:language.languageStrForFirstAndSubType ofType:@"lproj"]];
+        ALLanguage *lang = [[ALLanguage alloc] initWithALLanguageStr:languageStr];
+        
+        //查找languageStrForFirstAndSubType对应的lproj
+        appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:lang.languageStrForFirstAndSubClass ofType:@"lproj"]];
         if (appLanguageBundle) {
-            string.finalLanguage = language.languageStrForFirstAndSubType;
+            string.finalLanguage = lang.languageStrForFirstAndSubClass;
         }
-    }
-    if(!appLanguageBundle){
-        //查找zh.lproj
-        appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:language.firstType ofType:@"lproj"]];
-        if (appLanguageBundle) {
-            string.finalLanguage = language.firstType;
+        
+        //继续查找firstType对应的lproj
+        if(!appLanguageBundle){
+            //查找zh.lproj
+            appLanguageBundle = [NSBundle bundleWithPath:[podBundle pathForResource:lang.firstclassification ofType:@"lproj"]];
+            if (appLanguageBundle) {
+                string.finalLanguage = lang.firstclassification;
+            }
         }
     }
     
@@ -218,6 +218,27 @@ static NSString *appLanguageKey = @"appLanguageKey";
     string.localizedString = [appLanguageBundle localizedStringForKey:key value:nil table:table];
     return string;
 }
+
+
+/**
+ 根据xxxx.app中资源路径来获取国际化文案
+ 格式: @"bundleName(.bunndle文件名)/language(.lproj文件名)/table(.string文件名)/key(文案名)"
+ 实例: @"ALFoundation/zh-Hans/user/TName"
+
+ @param path
+ @return
+ */
++(ALLocalizedString*)localizedStringForPath:(NSString*)path{
+    NSArray *ss = [path componentsSeparatedByString:@"/"];
+    NSString *bundleName = ss.firstObject;
+    NSString *language = [ss objectAtIndex:1];
+    NSString *tableName = [ss objectAtIndex:2];
+    NSString *keyName = [ss objectAtIndex:3];
+    
+    ALLocalizedString *localizedString = [ALLocalizedString localizedStringForKey:keyName language:language bundleName:bundleName table:tableName];
+    return localizedString;
+}
+
 
 #pragma mark - 管理应用内语言
 /**
@@ -251,6 +272,23 @@ static NSString *appLanguageKey = @"appLanguageKey";
         default:
             break;
     }
+}
+
+
+/**
+ 获取应用内语言设置
+ */
++(ALLanguageStr*)appLanguage{
+    //app当前语言
+    NSString *appLanguage = [[NSUserDefaults standardUserDefaults] objectForKey:appLanguageKey];
+    if(!appLanguage){
+        //appLanguage为空的情况设置操作系统语言为app默认语言
+        NSArray *languages = [NSLocale preferredLanguages];// app所支持的语言
+        NSString *currentOSLanguage = [languages objectAtIndex:0];
+        appLanguage = currentOSLanguage;
+        //如香港繁体 @"zh-Hant-HK";
+    }
+    return appLanguage;
 }
 
 @end

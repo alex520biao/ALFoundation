@@ -1,3 +1,4 @@
 /* Localized versions of Info.plist keys */
 
-TName = "成长计划";
+TName = "Name";
+

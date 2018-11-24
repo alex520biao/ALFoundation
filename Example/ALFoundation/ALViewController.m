@@ -83,6 +83,9 @@
     //pod中的国际化文案读取
     NSString *str = [ALLocalizedString localizedStringForKey:@"TName" bundleName:@"ALFoundation" table:@"user"];
     NSString *str11 = ALLocalizedStringFromTableInBundle(@"TName",@"user",@"ALFoundation",nil);
+    
+    ALLocalizedString *str222 = [ALLocalizedString localizedStringForPath:@"ALFoundation/zh-Hans/user/TName"];
+
     NSLog(@"str:%@",str);
 }
 

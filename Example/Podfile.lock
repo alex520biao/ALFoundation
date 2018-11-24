@@ -6,8 +6,8 @@ PODS:
     - ALObserverManager (= 0.1.7)
     - ALURLRouter (= 1.1.0)
     - JSONModel (~> 1.1.0)
-    - SDWebImage
-    - SDWebImage/WebP
+    - SDWebImage (= 3.8.2)
+    - SDWebImage/WebP (= 3.8.2)
   - ALObserverManager (0.1.7):
     - ReactiveCocoa
   - ALURLRouter (1.1.0)
@@ -60,12 +60,12 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   ALFoundation:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
   ALAPNSManager: 21b04990585f1b24e7c9dbd52dec7634e2cd15e0
   ALDEBugTool: 03d5c232c6c5d64cb6c140d5a23d87ef0dd93e6d
-  ALFoundation: 708244cdc27208c8028c8a0c56d3b17eddb131fb
+  ALFoundation: bb272f29e05b43b3681d83ce97bab8ed23b66f2c
   ALObserverManager: 8fd290f89c29167526df4f60bb24c0b2906a19ad
   ALURLRouter: b3eec2b534aecf9dd585b27c848af884d4b6e83e
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
@@ -77,4 +77,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: d2c29f05c9976e4b9ad18ec73a51ff3c58695706
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1

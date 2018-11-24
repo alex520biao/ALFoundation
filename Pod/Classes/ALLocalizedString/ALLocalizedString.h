@@ -29,20 +29,21 @@ typedef NSString ALLanguageStr;
 @interface ALLanguage : NSObject
 
 /**
- 从iOS系统得到的原始语言字符串
+ iOS系统标准本地化语言类型字符串: 从iOS系统得到的原始语言字符串
+ 典型格式如: zh-Hans-HK(中文-繁体-香港)、en-CN(英文-中国)
  */
 @property (nonatomic, copy,readonly) ALLanguageStr *languageStr;
 
 /**
  语言大分类: 如en、zh等,必须小写
  */
-@property (nonatomic, copy,readonly) NSString *firstType;
+@property (nonatomic, copy,readonly) NSString *firstclassification;
 
 /**
  语言子分类: 如中文: Hans(简体)、Hant(繁体)，首字母大写其余小写
  中文等特殊语言有子分类
  */
-@property (nonatomic, copy,readonly) NSString *subType;
+@property (nonatomic, copy,readonly) NSString *subclassification;
 
 /**
  语言国家/地区代码: CN(大陆)、HK(香港)、TW(台湾)、SG(新加坡)等
@@ -59,16 +60,16 @@ typedef NSString ALLanguageStr;
 - (instancetype)initWithALLanguageStr:(ALLanguageStr*)languageStr;
 
 /**
- firstType+subType，如: zh-Hans
- 如果subType不存在则只返回firstType
+ firstClass+subClass，如: zh-Hans
+ 如果subClass不存在则只返回firstClass
  
  @return
  */
--(ALLanguageStr*)languageStrForFirstAndSubType;
+-(ALLanguageStr*)languageStrForFirstAndSubClass;
 
 /**
  ALLanguage对象转换为ALLanguageStr
- firstType+subType+region，如:zh-Hans-HK
+ firstClass+subClass+region，如:zh-Hans-HK
  
  @return
  */
@@ -130,8 +131,18 @@ typedef NSString ALLanguageStr;
  
  @return
  */
-+(ALLocalizedString*)localizedStringForKey:(NSString*)key language:(ALLanguage*)language bundleName:(NSString*)bundleName table:(NSString*)table;
++(ALLocalizedString*)localizedStringForKey:(NSString*)key language:(ALLanguageStr*)language bundleName:(NSString*)bundleName table:(NSString*)table;
 
+
+/**
+ 根据xxxx.app中资源路径来获取国际化文案
+ 格式: @"bundleName(.bunndle文件名)/language(.lproj文件名)/table(.string文件名)/key(文案名)"
+ 实例: @"ALFoundation/zh-Hans/user/TName"
+ 
+ @param path
+ @return
+ */
++(ALLocalizedString*)localizedStringForPath:(NSString*)path;
 
 #pragma mark - 管理应用内语言
 /**
@@ -140,5 +151,10 @@ typedef NSString ALLanguageStr;
  @param sender
  */
 + (IBAction)changeLanguage:(UIButton *)sender;
+
+/**
+ 获取应用内语言设置
+ */
++(ALLanguageStr*)appLanguage;
 
 @end
