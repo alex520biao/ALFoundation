@@ -30,6 +30,7 @@
 
 /**
  self对象的弱引用替身
+ 每次访问都会新建一个weakProxy对象
  */
 @property (nonatomic,weak,readonly) YYWeakProxy* weakProxy;
 

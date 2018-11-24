@@ -11,33 +11,15 @@
 
 @implementation NSObject (WeakProxy)
 
-
-///**
-// self对象的弱引用替身
-// NSTimer以及其他以self作为参数易导致循环引用，weakProxy是NSObject的弱引用提升
-// 
-// @return
-// */
-//- (YYWeakProxy*)weakProxy {
-//    YYWeakProxy *proxy = [YYWeakProxy proxyWithTarget:self];
-//    return proxy;
-//}
-    
-@dynamic weakProxy;
-    
-- (YYWeakProxy *)weakProxy{
-    YYWeakProxy *proxy = objc_getAssociatedObject(self, @selector(weakProxy));
-    if(!proxy){
-        proxy = [YYWeakProxy proxyWithTarget:self];
-        [self setWeakProxy:proxy];
-    }
+/**
+ self对象的弱引用替身
+ NSTimer以及其他以self作为参数易导致循环引用，weakProxy是NSObject的弱引用提升
+ 
+ @return
+ */
+- (YYWeakProxy*)weakProxy {
+    YYWeakProxy *proxy = [YYWeakProxy proxyWithTarget:self];
     return proxy;
-}
-    
-- (void)setWeakProxy:(YYWeakProxy *)weakProxy{
-    [self willChangeValueForKey:NSStringFromSelector(@selector(weakProxy))]; // KVO
-    objc_setAssociatedObject(self, @selector(weakProxy), weakProxy, OBJC_ASSOCIATION_ASSIGN);//弱引用
-    [self didChangeValueForKey:NSStringFromSelector(@selector(weakProxy))]; // KVO
 }
 
 
