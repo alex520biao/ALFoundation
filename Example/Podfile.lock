@@ -1,6 +1,6 @@
 PODS:
   - ALAPNSManager (0.1.4)
-  - ALDEBugTool (0.2.0)
+  - ALDEBugTool (0.3.0)
   - ALFoundation (0.1.0):
     - ALAPNSManager (= 0.1.4)
     - ALObserverManager (= 0.1.7)
@@ -11,32 +11,32 @@ PODS:
   - ALObserverManager (0.1.7):
     - ReactiveCocoa
   - ALURLRouter (1.1.0)
-  - Expecta (1.0.5)
+  - Expecta (1.0.6)
   - JSONModel (1.1.2)
-  - libwebp (0.5.1):
-    - libwebp/core (= 0.5.1)
-    - libwebp/dec (= 0.5.1)
-    - libwebp/demux (= 0.5.1)
-    - libwebp/dsp (= 0.5.1)
-    - libwebp/enc (= 0.5.1)
-    - libwebp/mux (= 0.5.1)
-    - libwebp/utils (= 0.5.1)
-    - libwebp/webp (= 0.5.1)
-  - libwebp/core (0.5.1):
+  - libwebp (1.0.0):
+    - libwebp/core (= 1.0.0)
+    - libwebp/dec (= 1.0.0)
+    - libwebp/demux (= 1.0.0)
+    - libwebp/dsp (= 1.0.0)
+    - libwebp/enc (= 1.0.0)
+    - libwebp/mux (= 1.0.0)
+    - libwebp/utils (= 1.0.0)
+    - libwebp/webp (= 1.0.0)
+  - libwebp/core (1.0.0):
     - libwebp/webp
-  - libwebp/dec (0.5.1):
+  - libwebp/dec (1.0.0):
     - libwebp/core
-  - libwebp/demux (0.5.1):
+  - libwebp/demux (1.0.0):
     - libwebp/core
-  - libwebp/dsp (0.5.1):
+  - libwebp/dsp (1.0.0):
     - libwebp/core
-  - libwebp/enc (0.5.1):
+  - libwebp/enc (1.0.0):
     - libwebp/core
-  - libwebp/mux (0.5.1):
+  - libwebp/mux (1.0.0):
     - libwebp/core
-  - libwebp/utils (0.5.1):
+  - libwebp/utils (1.0.0):
     - libwebp/core
-  - libwebp/webp (0.5.1)
+  - libwebp/webp (1.0.0)
   - ReactiveCocoa (2.5):
     - ReactiveCocoa/UI (= 2.5)
   - ReactiveCocoa/Core (2.5):
@@ -50,7 +50,7 @@ PODS:
   - SDWebImage/WebP (3.8.2):
     - libwebp
     - SDWebImage/Core
-  - Specta (1.0.5)
+  - Specta (1.0.7)
 
 DEPENDENCIES:
   - ALDEBugTool
@@ -64,16 +64,16 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   ALAPNSManager: 21b04990585f1b24e7c9dbd52dec7634e2cd15e0
-  ALDEBugTool: 03d5c232c6c5d64cb6c140d5a23d87ef0dd93e6d
+  ALDEBugTool: 445cc42ee9856972c1f3c04ed64bb5b994f800c8
   ALFoundation: bb272f29e05b43b3681d83ce97bab8ed23b66f2c
   ALObserverManager: 8fd290f89c29167526df4f60bb24c0b2906a19ad
   ALURLRouter: b3eec2b534aecf9dd585b27c848af884d4b6e83e
-  Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
+  Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
   JSONModel: 216584d0311b053ff714f1d6cb700dbf890847bc
-  libwebp: b9126f8982a95370cf4eaad9bb3fefd57f052c15
+  libwebp: d7e0c95fe97245c97e08101eba10702ebb0f6101
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  Specta: ac94d110b865115fe60ff2c6d7281053c6f8e8a2
+  Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
 
 PODFILE CHECKSUM: d2c29f05c9976e4b9ad18ec73a51ff3c58695706
 
